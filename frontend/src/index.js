@@ -10,6 +10,7 @@ import App from './App';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from './store/session';
+import LandingPage from './components/LandingPage/LandingPage'
 
 const store = configureStore();
 
@@ -31,10 +32,16 @@ function Root() {
       <ModalProvider>
         <BrowserRouter>
           <App />
+          <br></br>
+          <br></br>
+          <br></br>
+          
+          <LandingPage/>
           <Modal />
         </BrowserRouter>
       </ModalProvider>
     </Provider>
+
 
   );
 }
