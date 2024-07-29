@@ -1,6 +1,12 @@
 const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
+const toolsRouter = require('./tools.js');
+const reservationsRouter = require('./reservations.js');
+const reviewsRouter = require('./reviews.js');
+const toolImagesRouter = require('./tool-images.js');
+const reviewImagesRouter = require('./review-images.js');
+const staticImagesRouter = require('./images.js')
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -9,9 +15,16 @@ const { restoreUser } = require("../../utils/auth.js");
 router.use(restoreUser);
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
+router.use('/tools', toolsRouter);
+
+router.use('/images', staticImagesRouter);
+
+router.use('/reservations', reservationsRouter);
+router.use('/reviews', reviewsRouter);
+router.use('/tool-images', toolImagesRouter);
+router.use('/review-images', reviewImagesRouter);
 router.use((err, req, res, next) => {
-  if(err.errors) return res.status(err.status).json({message:err.message,status:err.status,errors:err.errors})
-  return res.status(err.status).json({message:err.message,status:err.status})
+  res.status(err.status).json({message:err.message,status:err.status})
 })
 
 module.exports = router;
