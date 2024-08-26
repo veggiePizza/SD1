@@ -1,0 +1,22 @@
+Right now it goes:
+
+Welcome Screen (Go to Sign up) -> Welcome to SignUp Screen (Go to Sign In) -> Welcome to SignIn Screen (FIXED)
+
+What I need to do:
+
+Make a basic Welcome screen that lets user either: SignIn or SignUp (Priority) DONE
+
+SignIn: Make a basic SignIn Screen that works with the firebase API to let them SignIn: Also add a back to welcome and go to signup screen navigation DONE
+
+SignUp: Make a basic SignUp Screen that works with the firebase API to let them make an account: Also add a back to welcome and signin screen navigation DONE
+
+
+==========NEXT===============
+
+SignIn: The functionality is working to signin the user as shown by console logs but it should navigate to home screen
+
+SignUp: The functionality is working to signup the user as shown by console logs but it should also navigate to home screen
+
+Home Screen: Build out a base home screen
+
+
