@@ -9,11 +9,11 @@ import AppStackNavigator from "./AppStackNavigator";
 import AuthStackNavigator from "./AuthStackNavigator";
 
 // Import Firebase authentication functions and types
-import { onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { authInstance } from "../services/firebase";
 
 // Import NavigationContext to control which screen loads initially based on authentication status
-import { NavigationContext } from './navigationContext';
+// import { NavigationContext } from './navigationContext';
 
 const Navigation = () => {
     // State to track if the user is authenticated
