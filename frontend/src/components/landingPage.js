@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { NavLink, Route, Switch, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getTools } from '../store/tools';
-import "../index.css"
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -21,7 +20,7 @@ const LandingPage = () => {
           <img src={`${previewImage}`}></img>
 
           <div className='container2'>
-            <h3>{city}, {state}</h3>
+            <h3 className=' toolNameCard2'>{name}</h3>
 
             <div className='rating'>
               {avgRating ? (
@@ -36,7 +35,7 @@ const LandingPage = () => {
             </div>
           </div>
           
-          <h4>{`$${price.toFixed(2)} night`}</h4>
+          <h4>{`$${price.toFixed(2)} / day`}</h4>
         </NavLink>
       ))}
     </div>

@@ -1,36 +1,23 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth, db } from "./firebase";
 import { toast } from "react-toastify";
-import { setDoc, doc } from "firebase/firestore";
+import { useDispatch } from 'react-redux';
+import * as session from '../../store/firebase';
 
-function SignInwithGoogle() {
-  function googleLogin() {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then(async (result) => {
-      console.log(result);
-      const user = result.user;
-      if (result.user) {
-        await setDoc(doc(db, "Users", user.uid), {
-          email: user.email,
-          firstName: user.displayName,
-          photo: user.photoURL,
-          lastName: "",
-        });
-        toast.success("User logged in Successfully", {
-          position: "top-center",
-        });
-        window.location.href = "/profile";
-      }
-    });
-  }
+function SignInwithGoogle({ closeModal }) {
+  const dispatch = useDispatch();
+  const handleGoogleLogin = async () => {
+    try {
+      await dispatch(session.googleLogin()).then(closeModal());
+    } catch (error) {
+      toast.error("Error during sign-in", { position: "top-center" });
+    }
+  };
+
   return (
     <div>
-      <p className="continue-p">--Or continue with--</p>
       <div
-        style={{ display: "flex", justifyContent: "center", cursor: "pointer" }}
-        onClick={googleLogin}
-      >
-        <img src={require("../../images/google.png")} width={"60%"} />
+        style={{ cursor: "pointer" }}
+        onClick={handleGoogleLogin}>
+        <img src={require("../../images/google.png")} width={"35%"} />
       </div>
     </div>
   );

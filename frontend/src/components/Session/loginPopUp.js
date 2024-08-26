@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal"
 import SignInwithGoogle from "./signInWithGoogle"
 import { toast } from "react-toastify";
 
-function LoginFormModal() {
+function FirebaseLogin() {
   const dispatch = useDispatch();
 
   const [credential, setCredential] = useState("");
@@ -58,10 +58,10 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
-        <SignInwithGoogle/>
+        <SignInwithGoogle closeModal={closeModal} />
       </form>
     </div>
   );
 }
 
-export default LoginFormModal;
+export default FirebaseLogin;

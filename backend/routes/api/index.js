@@ -14,6 +14,7 @@ const { restoreUser } = require("../../utils/auth.js");
   // If current user session is not valid, set req.user to null
 router.use(restoreUser);
 router.use('/session', sessionRouter);
+router.use('/firebase', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/tools', toolsRouter);
 
