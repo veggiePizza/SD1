@@ -1,0 +1,62 @@
+.spotForm {
+    margin-left: 500px;
+    margin-right: 500px;
+    padding-top: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.spotForm>label {
+    font-size: medium;
+}
+
+.spotLocation {
+    border-bottom: solid 1px black;
+    padding-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+.name {
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+label {
+    display: flex;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+}
+
+.photoLinks {
+    display: flex;
+    flex-direction: column;
+}
+
+.title>label {
+    font-size: x-large;
+}
+
+.title>h1 {
+    font-size: small;
+}
+
+.title>textarea {
+    width: 98%;
+}
+
+.spotLocation ::placeholder {
+    color: white;
+    opacity: 1;
+}
+.errorLabel{
+    color: red;
+}

@@ -32,6 +32,8 @@ router.post('/', validateLogin, async (req, res, next) => {
 
   await setTokenCookie(res, user);
 
+  console.log("*******",req);
+
   return res.json({user: {
     id: user.id,
     firstName: user.firstName,
@@ -51,6 +53,7 @@ router.delete(
 );
 
 router.get('/',restoreUser,(req, res) => {
+  
     const { user } = req;
     if (user) {
       return res.json({
