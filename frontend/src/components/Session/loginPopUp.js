@@ -7,14 +7,9 @@ import { toast } from "react-toastify";
 
 function FirebaseLogin() {
   const dispatch = useDispatch();
-
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
-
-
   const [errors, setErrors] = useState([]);
-
-
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
