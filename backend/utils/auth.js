@@ -34,8 +34,6 @@ const restoreUser = (req, res, next) => {
       return next();
     }
 
-<<<<<<< HEAD
-=======
 console.log("here37")
     console.log(jwtPayload.data);
     console.log("here39")
@@ -45,7 +43,6 @@ console.log("here37")
       photoURL: "user.photoURL",
     };
 /*
->>>>>>> new
     try {
       const { id } = jwtPayload.data;
       req.user = await User.scope('currentUser').findByPk(id);
@@ -53,11 +50,6 @@ console.log("here37")
       res.clearCookie('token');
       return next();
     }
-<<<<<<< HEAD
-
-    if (!req.user) res.clearCookie('token');
-
-=======
 */
 
 //firebase
@@ -65,17 +57,12 @@ console.log("here37")
 
     if (!req.user) res.clearCookie('token');
 
->>>>>>> new
     return next();
   });
 };
 
 const requireAuth = function (req, _res, next) {
   if (req.user) return next();
-<<<<<<< HEAD
-
-=======
->>>>>>> new
   const err = new Error('Authentication required');
   err.title = 'Authentication required';
   err.errors = ['Authentication required'];
