@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const sessionRouter = require('./session.js');
+const firebaseRouter = require('./firebase.js')
 const usersRouter = require('./users.js');
 const toolsRouter = require('./tools.js');
 const reservationsRouter = require('./reservations.js');
@@ -14,7 +15,7 @@ const { restoreUser } = require("../../utils/auth.js");
   // If current user session is not valid, set req.user to null
 router.use(restoreUser);
 router.use('/session', sessionRouter);
-router.use('/firebase', sessionRouter);
+router.use('/firebase', firebaseRouter);
 router.use('/users', usersRouter);
 router.use('/tools', toolsRouter);
 
@@ -26,6 +27,9 @@ router.use('/tool-images', toolImagesRouter);
 router.use('/review-images', reviewImagesRouter);
 router.use((err, req, res, next) => {
   res.status(err.status).json({message:err.message,status:err.status})
-})
+})/*
+router.use((err, req, res, next) => {
+  res.json({message:err.message,status:err.status})
+})*/
 
 module.exports = router;

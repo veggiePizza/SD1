@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { NavLink, Route, Switch, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getTools } from '../store/tools';
+import "./landingPage.css"
 
 const LandingPage = () => {
   const dispatch = useDispatch();
