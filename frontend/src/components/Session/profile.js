@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
+import "./index.css"
 
 function Profile() {
   const [userDetails, setUserDetails] = useState(null);

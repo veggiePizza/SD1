@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
 import SignInwithGoogle from "./signInWithGoogle"
 import { toast } from "react-toastify";
+import "./index.css"
 
 function FirebaseLogin() {
   const dispatch = useDispatch();

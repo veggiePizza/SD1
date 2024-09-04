@@ -11,40 +11,19 @@ module.exports = {
     options.tableName = 'Users';
     return queryInterface.bulkInsert(options, [
       {
-        firstName: "Alex",
-        lastName: "Caballero",
-        email: 'caballero@user.io',
-        username: 'veggiePizza',
-        hashedPassword: bcrypt.hashSync('password')
+        uid: "VJPK9PxirkRTzoPNVEn6ojxP7b52",
+        firstName: "Alex Caballero",
+        lastName: "",
+        email: 'alexcaballero18@gmail.com',
+        photo: "https://lh3.googleusercontent.com/a/ACg8ocKwAkDTsXiXvwK-tG2jwwYFa-LXM8ZtwUdcD2nMBa6FgsVxb3u0=s96-c"
       },
       {
-        firstName: "Rediet",
-        lastName: "Kebede",
-        email: 'kebede@user.io',
-        username: 'kebedeR',
-        hashedPassword: bcrypt.hashSync('password2')
-      },
-      {
-        firstName: "Omer",
-        lastName: "Khan",
-        email: 'khan@user.io',
-        username: 'khanO',
-        hashedPassword: bcrypt.hashSync('password3')
-      },
-      {
-        firstName: "John",
-        lastName: "Mounce",
-        email: 'mounce@user.io',
-        username: 'mounceJ',
-        hashedPassword: bcrypt.hashSync('password3')
-      },
-      {
-        firstName: "Kshitij",
-        lastName: "Patel",
-        email: 'patel@user.io',
-        username: 'patelK',
-        hashedPassword: bcrypt.hashSync('password3')
-      }
+        uid: "fXOmsdyyJpZzHHz646HM4kGcZue2",
+        firstName: "lendit",
+        lastName: "",
+        email: 'lendit38@gmail.com',
+        photo: "https://lh3.googleusercontent.com/a/ACg8ocLWjpEBxbij3W5u6EXkwoIqd9YzUhkoGuYwfwfqtCSR5Y_eRQ=s96-c"
+},
     ], {});
   },
 
@@ -52,7 +31,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['veggiePizza', 'kebedeR', 'khanO', 'mounceJ', 'patelK'] }
+      email: { [Op.in]: ['alexcaballero18@gmail.com', 'lendit38@gmail.com'] }
     }, {});
   }
 };
