@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { useDispatch } from 'react-redux';
 import * as session from '../../store/firebase';
+import "./index.css"
 
 function SignInwithGoogle({ closeModal }) {
   const dispatch = useDispatch();

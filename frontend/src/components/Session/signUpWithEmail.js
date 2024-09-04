@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import * as sessionActions from "../../store/session";
+import * as sessionActions from "../../store/firebase";
+import "./index.css"
 
 function SignupFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
@@ -19,12 +20,12 @@ function SignupFormModal() {
     if (password === confirmPassword) {
       setErrors([]);
 
-      
-      return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
-        .then(closeModal)
+      const user = { email:"pooper3000@gmail.com", firstName:"POOP", lastName:"FOREVER", password:"Sekacnap1!" }
+      return dispatch(sessionActions.signup(user))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
+          toast.error("lol", { position: "top-center" });
         });
 
 
@@ -46,16 +47,7 @@ function SignupFormModal() {
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+            //required
           />
         </label>
         <label>
@@ -64,7 +56,7 @@ function SignupFormModal() {
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            required
+            //required
           />
         </label>
         <label>
@@ -73,7 +65,7 @@ function SignupFormModal() {
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            required
+            //required
           />
         </label>
         <label>
@@ -82,7 +74,7 @@ function SignupFormModal() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            //required
           />
         </label>
         <label>
@@ -91,7 +83,7 @@ function SignupFormModal() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+           // required
           />
         </label>
         <button type="submit">Sign Up</button>

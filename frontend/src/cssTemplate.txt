@@ -315,16 +315,6 @@ code {
   border: 1px solid black
 }
 
-.profile-dropdown {
-  display: block;
-  /* Other styles for showing the menu */
-}
-
-.profile-dropdown.hidden {
-  display: none;
-  /* Styles to hide the menu */
-}
-
 .toolNameCard2{
   font-size: calc(10px + 2vmin);
   color: pink;
@@ -333,4 +323,97 @@ code {
 .randomlol {
   text-align: center;
   background-image: linear-gradient(to right, rgb(82, 81, 81) , rgb(50, 49, 49));
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+.nav {
+  margin-left: 20px;
+  margin-right: 2000px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  border-bottom: solid grey .5px;
+  width: 1400px;
+  height: 50px;
+}
+
+.nav>* {
+  display: flex;
+}
+
+.nav-logo {
+  width: 90px;
+  height: auto;
+  align-items: center;
+}
+
+.create-spot-link {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.userMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.seperator {
+  border-bottom: solid grey 1px;
+  padding-bottom: 2px;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.menuList,
+.menuList2 {
+  padding: 10px;
+  padding-bottom: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background: white;
+}
+
+.menuList {
+  margin-top: 20px;
+}
+
+.menuList2 {
+  margin-top: 90px;
+}
+
+.menuList>*, .menuList2>* {
+  margin: 5px;
+  font-size: smaller;
+  display: flex;
+  justify-content: center;
+}
+
+.manageSpots, .logoutButton, .menuList > *{
+  background-image: linear-gradient(to right, rgb(227, 35, 81) , rgb(224, 34, 97));
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: white;
+  font-size: smaller;
+  width: 100%;
+}
+.logoutButton{
+  background-image: linear-gradient(to right, rgb(63, 63, 63) , rgb(107, 106, 106));
+}
+.menuList button{
+  width: 70px;
 }

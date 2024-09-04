@@ -1,38 +1,214 @@
-.App {
-  text-align: center;
-}
+@media screen and (max-width: 745px) {
+  .allTools {
+    padding-top: 100px;
+    padding-left: 80px;
+    padding-right: 80px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+  .toolLink {
+    max-width: 98%;
+    max-height: 25%;
+    display: flex;
+    flex-direction: column;
+    margin: 7px;
+  }
+  .toolLink>img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    border-radius: 15px;
+    width: 490px;
+    height: 370px;
+    max-width: 98%;
+    max-height: 50%;
+    margin-left: 2px;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    border: 1px solid black
+  }
+
+  .container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3px;
+  }
+
+  .toolLink>h2 {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    font-size: x-small;
+  }
+
+
+  .toolLink>h4 {
+    margin: 2px;
+  }
+}
+@media screen and (min-width: 745px) {
+  .allTools {
+    padding-top: 100px;
+    padding-left: 80px;
+    padding-right: 80px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .toolLink {
+    
+    max-width: 47%;
+    display: flex;
+    flex-direction: column;
+    margin: 7px;
+  }
+  .toolLink>img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    border-radius: 15px;
+    width: 98%;
+    height: 250px;
+    margin-left: 2px;
+
+    border: 1px solid black
+  }
+
+  .container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3px;
+  }
+
+  .toolLink>h2 {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+
+  .toolLink>h4 {
+    margin: 2px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+@media screen and (min-width: 950px) {
+  .allTools {
+    padding-top: 100px;
+    padding-left: 80px;
+    padding-right: 80px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .toolLink {
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin: 7px;
+  }
+  .toolLink>img {
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-left: 2px;
+    border: 1px solid black
+  }
+
+  .container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3px;
+  }
+
+  .toolLink>h2 {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    font-size: medium;
+  }
+}
+
+@media screen and (min-width: 1128px) {
+  .allTools {
+    padding-top: 100px;
+    padding-left: 80px;
+    padding-right: 80px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .toolLink {
+    height: 300px;
+    max-width: 23%;
+    display: flex;
+    flex-direction: column;
+    margin: 7px;
+  }
+
+  .toolLink>img {
+    height: 210px;
+    width: 290px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-left: 2px;
+    border: 1px solid black
+  }
+
+  .container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3px;
+  }
+
+  .toolLink>h2 {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+}
+
+.toolLink h3 {
+  font-size: small;
+  font-weight: bolder;
+}
+.toolLink h4 {
+  margin: 2px;
+  font-size: smaller;
+}
+
+
+.toolLink .toolNameCard {
+  visibility: hidden;
+}
+
+.toolLink:hover .toolNameCard {
+  visibility: visible;
+}
+
+.rating {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.rating>* {
+  padding: 1px;
+  margin: 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

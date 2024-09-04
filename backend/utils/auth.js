@@ -3,10 +3,15 @@ const { jwtConfig } = require('../config');
 const { User, Reservation, Tool, ReviewImage, Review, ToolImage } = require('../db/models');
 const { secret, expiresIn } = jwtConfig;
 
+const { db } = require('../config/firebase')
+
 const setTokenCookie = (res, user) => {
   // Create the token.
+  console.log("10")
+  console.log(user);
+  console.log("12")
   const token = jwt.sign(
-    { data: user.toSafeObject() },
+    { data: user },
     secret,
     { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
   );
@@ -20,12 +25,11 @@ const setTokenCookie = (res, user) => {
     secure: isProduction,
     sameSite: isProduction && "Lax"
   });
-
+  //console.log(jwtPayload);
   return token;
 };
 
 const restoreUser = (req, res, next) => {
-  // token parsed from cookies
   const { token } = req.cookies;
   req.user = null;
 
@@ -34,26 +38,12 @@ const restoreUser = (req, res, next) => {
       return next();
     }
 
-console.log("here37")
-    console.log(jwtPayload.data);
-    console.log("here39")
-    req.user = {
-      email: "user.email",
-      displayName: "user.displayName",
-      photoURL: "user.photoURL",
-    };
-/*
     try {
-      const { id } = jwtPayload.data;
-      req.user = await User.scope('currentUser').findByPk(id);
+      req.user = jwtPayload.data;
     } catch (e) {
       res.clearCookie('token');
       return next();
     }
-*/
-
-//firebase
-
 
     if (!req.user) res.clearCookie('token');
 
@@ -87,13 +77,13 @@ const authReservation = async function (req, res, next) {
 
 const authDeleteReservation = async function (req, res, next) {
   const reservation = await Reservation.findByPk(req.params.id);
- 
+
   if (reservation) {
     today = new Date()
     start = new Date(reservation.startDate)
-    if (today > start) 
+    if (today > start)
       return res.status(403).json({ message: "Reservations that have been started can't be deleted", statusCode: 403 })
-    
+
     const tool = await Tool.findByPk(reservation.toolId);
     if (req.user.id == reservation.userId || req.user.id == tool.ownerId) return next();
     const err = new Error("Reservation or Tool must belong to the current user")
@@ -112,7 +102,7 @@ const authDeleteReviewImage = async function (req, res, next) {//fix?
   if (reviewImage) {
     const review = await Review.findByPk(reviewImage.reviewId);
     if (req.user.id == review.userId)
-     return next();
+      return next();
     const err = new Error("Review must belong to the current user")
     err.message = 'Forbidden';
     err.status = 403;
@@ -150,7 +140,7 @@ const authModifyToolImage = async function (req, res, next) {
     err.status = 403;
     return next(err);
   }
-  
+
   const err = new Error("No Tool Image")
   err.message = "Tool Image couldn't be found";
   err.status = 404;
@@ -189,7 +179,7 @@ const authIsToolNot = async function (req, _res, next) {
   return next(err);
 }
 
-const authUser = async function (req, res, next) {////check my errors
+const authExistingUser = async function (req, res, next) {////check my errors
   const { email, username } = req.body;
   checkUsername = await User.findOne({ where: { username } })
   checkEmail = await User.findOne({ where: { email } })
@@ -232,7 +222,7 @@ const reservationConflict2 = async function (req, res, next) {
   today = new Date();
   if (start > today)
     return res.status(403).json({ message: "Past reservations can't be modified", statusCode: 403 })
-  
+
   const errors = {};
 
   reservations.forEach(el => {
@@ -260,7 +250,7 @@ module.exports = {
   authModifyToolImage,
   authIsTool,
   authIsToolNot,
-  authUser,
+  authExistingUser,
   reservationConflict,
   reservationConflict2
 };

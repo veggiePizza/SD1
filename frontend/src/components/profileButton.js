@@ -9,7 +9,7 @@ import FirebaseLogin from './Session/loginPopUp'
 function ProfileButton({ user }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState(true);//needs to be false and to update correctly
+  const [showMenu, setShowMenu] = useState(false);//needs to be false and to update correctly
   const ulRef = useRef();
 
   const openMenu = () => {
@@ -31,21 +31,21 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const closeMenu = () => setShowMenu(false);
+  const closeMenu = () => setShowMenu(true);
 
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
     navigate("/")
-  };console.log(user);
+  };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
       <button className="userMenu" onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <i class="fa-regular fa-square-caret-down"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
 
@@ -54,8 +54,8 @@ function ProfileButton({ user }) {
             {user ? (
               <div className="menuList2">
 
-                <img className="profilePicture" src={`${user.photoURL}`}></img>
-                <li>Hello {user.displayName}</li>
+                <img className="profilePicture" src={`${user.photo}`}></img>
+                <li>Hello {user.firstName}</li>
                 <li className="seperator">
                   <NavLink exact to="/tools/current">
                     <button className="manageTools">Manage Tools</button>

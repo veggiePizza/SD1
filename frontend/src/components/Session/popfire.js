@@ -3,6 +3,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth, db } from "../Session/firebase";
 import { toast } from "react-toastify";
 import { setDoc, doc } from "firebase/firestore";
+import "./index.css"
 
 function SignInModal() {
   const [isOpen, setIsOpen] = useState(false);

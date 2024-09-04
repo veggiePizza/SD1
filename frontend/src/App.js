@@ -15,22 +15,30 @@ import LandingPage from "./components/landingPage";
 import ToolsManagement from "./components/Tools/ToolsManagement";
 import UpdateTool from "./components/Tools/UpdateTool";
 import Login from "./components/Session/login";
-import SignUp from "./components/Session/register";
+import SignUp from "./components/Session/signUpWithEmail"
 import Profile from "./components/Session/profile";
+
+import "./App.css"
 
 
 function App() {
+  const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+  }, [dispatch]);
+
+/*
   const [user, setUser] = useState(null);
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(setUser);
     return unsubscribe;
   }, []);
+*/
+  
 
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-  }, [dispatch]);
+
 
   return (
     <>
