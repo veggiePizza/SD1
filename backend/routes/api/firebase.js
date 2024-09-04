@@ -24,6 +24,7 @@ router.delete('/', (_req, res) => {
     return res.json({ message: 'success' });
   }
 );
+//test
 
 router.get('/', restoreUser, (req, res) => {
   const { user } = req;
