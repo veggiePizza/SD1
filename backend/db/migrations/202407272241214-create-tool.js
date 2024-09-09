@@ -43,9 +43,9 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER
       },
-      ownerId: {
+      owner: {
         type: Sequelize.INTEGER,
-        references: { model: 'Users' },
+        //references: { model: 'Users' },
         onDelete: 'CASCADE'
       },
       createdAt: {

@@ -20,7 +20,7 @@ module.exports = {
       name: "Drill",
       description: "Drill!!",
       price: 210,
-      ownerId: 1,
+      owner: "VJPK9PxirkRTzoPNVEn6ojxP7b52",
     },
     {
       address: "6th street",
@@ -32,7 +32,7 @@ module.exports = {
       name: "Hammer",
       description: "smash smash",
       price: 200,
-      ownerId: 1,
+      owner: "fXOmsdyyJpZzHHz646HM4kGcZue2",
     },
     {
       address: "6th street",
@@ -44,7 +44,7 @@ module.exports = {
       name: "Lawn Mower",
       description: "grass massacre",
       price: 200,
-      ownerId: 2,
+      owner: "VJPK9PxirkRTzoPNVEn6ojxP7b52",
     },
     {
       address: "6th street",
@@ -56,7 +56,7 @@ module.exports = {
       name: "Macbook",
       description: "saving for a new one",
       price: 200,
-      ownerId: 2,
+      owner: "VJPK9PxirkRTzoPNVEn6ojxP7b52",
     },
     {
       address: "6th street",
@@ -68,7 +68,7 @@ module.exports = {
       name: "Vacuum",
       description: "vroom vroom",
       price: 290,
-      ownerId: 2,
+      owner: "VJPK9PxirkRTzoPNVEn6ojxP7b52",
     }], {});
   },
 

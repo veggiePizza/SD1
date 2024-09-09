@@ -9,12 +9,8 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
   const { idToken } = req.body;
   const decodedToken = await admin.auth().verifyIdToken(idToken);
-  //const user = await admin.auth().getUser(decodedToken.uid);
   const user = (await db.collection('Users').doc(decodedToken.uid).get()).data();
-  //console.log(decodedToken.exp)
-  //console.log("15")
   setTokenCookie(res, user);
-
   return res.json({ user });
 });
 

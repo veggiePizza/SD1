@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
+import * as sessionActions from "../../store/firebase";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
 import SignInwithGoogle from "./signInWithGoogle"
@@ -8,7 +8,7 @@ import "./index.css"
 
 function FirebaseLogin() {
   const dispatch = useDispatch();
-  const [credential, setCredential] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
@@ -16,7 +16,7 @@ function FirebaseLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password }))
+    return dispatch(sessionActions.login({ email, password }))
       .then(closeModal)
       .catch(
         async (res) => {
@@ -39,8 +39,8 @@ function FirebaseLogin() {
           Username or Email
           <input
             type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>

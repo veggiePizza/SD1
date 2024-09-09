@@ -52,8 +52,22 @@ function ToolForm({ tool }) {
         setPostErrors(validationErrors)
         setSuccessfullSubmit(false)
         tool = { ...tool, address, city, state, country, lat, lng, name, description, price };
+        const tool2 = {
+            address: "1542"
+            , city: "dallas"
+            , state: "tx"
+            , country: "usa"
+            , lat: 76.5
+            , lng: 67.8
+            , name: "alex"
+            , description: "tool"
+            , price: 400
+
+        }
         const toolImages = [mainImg, img2, img3, img4, img5]
-        if (!Object.keys(postErrors).length) dispatch(createTool(tool, toolImages))
+       const toolImages2 = ["/api/images/lendit.png"]
+       // if (!Object.keys(postErrors).length) dispatch(createTool(tool, toolImages))
+            dispatch(createTool(tool2, toolImages2))
     }
 
     if (idx) {

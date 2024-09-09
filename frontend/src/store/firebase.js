@@ -1,6 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../components/firebase"; // Import your Firebase configuration
-import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { csrfFetch } from './csrf';
@@ -65,10 +65,6 @@ export const signup = (user) => async (dispatch) => {
   //const user = await createUserWithEmailAndPassword(auth, email, password);
   const { firstName, lastName, email, password } = user;
   
-  console.log("71")
-  console.log(user)
-  console.log("73")
-  
   const response = await csrfFetch("/api/users", {
     method: "POST",
     body: JSON.stringify({
@@ -123,6 +119,34 @@ export const googleLogin = () => async (dispatch) => {
     return response;
   }
 
+};
+
+export const login = (user) => async (dispatch) => {
+  const { email, password } = user;
+  const result = await signInWithEmailAndPassword(auth, email, password)
+  //const idToken = await user.getIdToken();
+  
+  //const idToken = await user.getIdToken();
+  console.log(result.user)
+
+  //console.log(result.user)
+
+
+
+
+  if (user) {
+    const idToken = await result.user.getIdToken();
+    const response = await csrfFetch('/api/firebase', {
+      method: 'POST',
+      body: JSON.stringify({
+        idToken
+      })
+    });
+
+    const data = await response.json();
+    dispatch(setUser(data.user));
+    return response;
+  }
 };
 
 const initialState = { user: null };

@@ -187,7 +187,7 @@ router.get('/:id', async (req, res) => {
     include: [
       { model: Review }, //, attributes: []
       { model: ToolImage, attributes: ['id', 'url', 'preview'] },
-      { model: User, attributes: ['id', 'firstName', 'lastName'], as: "Owner" }
+      //{ model: User, attributes: ['id', 'firstName', 'lastName'], as: "Owner" }
     ],
     order: [[{ model: ToolImage }, 'id', 'ASC'],
     [{ model: Review }, 'updatedAt', 'DESC']]
