@@ -1,14 +1,15 @@
-// Import necessary modules and components from React, Tamagui, and React Navigation libraries
-import * as React from 'react';
-import { Button, Input, Stack, YStack } from 'tamagui';
+import * as React from "react";
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
 import { AuthScreenNavigationType } from "../../navigation/types";
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { authInstance } from "../../services/firebase"
-import {Image, StyleSheet, Text, View, TouchableOpacity, Pressable, TextInput} from "react-native";
-import FigmaSignUpScreen from './FigmaSignUpScreen';
+import { Animated, Image, StyleSheet, Text, View, TouchableOpacity, Pressable, TextInput, Easing} from "react-native";
+
+// import "@fontsource/quicksand"; // Defaults to weight 400
+// import "@fontsource/quicksand/400.css"; // Specify weight
+// import "@fontsource/quicksand/400-italic.css"; // Specify weight and style
 
 // Define an interface to type the form data for user sign-up
 interface IUser {
@@ -19,9 +20,21 @@ interface IUser {
 }
 
 // Define the SignupScreen component
-const SignupScreen = () => {
+const FigmaSignUpScreen = () => {
     // Use the useNavigation hook to get access to the navigation prop with typed routes
     const navigation = useNavigation<AuthScreenNavigationType<"SignUp">>();
+
+	const slideAnimation = React.useRef(new Animated.Value(500)).current;
+
+	React.useEffect(() => {
+        // Trigger the slide-in animation when the component mounts
+        Animated.timing(slideAnimation, {
+          toValue: 0, // Slide to the original position
+          duration: 1500, // Animation duration in milliseconds
+          easing: Easing.out(Easing.exp), // Use easing for a smoother animation
+          useNativeDriver: true, // Enable native driver for better performance
+        }).start();
+      }, [slideAnimation]);
 
     // Initialize react-hook-form with default values for the form fields
     const { control, handleSubmit, formState: { errors } } = useForm<IUser>({
@@ -72,134 +85,116 @@ const SignupScreen = () => {
             Alert.alert("Registration Error", "There was an issue creating your account. Please try again.");
         }
     }
+  	
+  	return (
+    		<View style={styles.lenditSignUpIphone}>
+      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../assets/Background.png")}/>
 
-    // Render the signup form
-    return (
-       <FigmaSignUpScreen/>
+      			<Animated.Text style={[styles.letsGetStarted, { transform: [{ translateX: slideAnimation }] }]}>
+  					Let's get started
+				</Animated.Text>
 
-        // <YStack f={1} ai="center" jc="center" p="$4" bg="$background">
-        //     {/* Title for the signup screen */}
-        //     <Text
-        //         fontFamily="$heading"
-        //         fontSize="$6"
-        //         color="$color"
-        //         mb="$4"
-        //     >
-        //         Create Account
-        //     </Text>
-        //     {/* Form stack to contain input fields */}
-        //     <Stack width="100%">
-        //         {/* Full Name Input */}
-        //         <Controller
-        //             control={control}
-        //             name="name"
-        //             render={({ field: { onChange, onBlur, value } }) => (
-        //                 <Input
-        //                     placeholder="Full Name"
-        //                     p="$3"
-        //                     bg="$background"
-        //                     borderColor="$borderColor"
-        //                     onChangeText={onChange}
-        //                     onBlur={onBlur}
-        //                     value={value}
-        //                 />
-        //             )}
-        //         />
-        //         {/* Display validation error if the name field is empty */}
-        //         {errors.name && <Text color="$red">Name is required</Text>}
 
-        //         {/* Email Input */}
-        //         <Controller
-        //             control={control}
-        //             name="email"
-        //             render={({ field: { onChange, onBlur, value } }) => (
-        //                 <Input
-        //                     placeholder="Email"
-        //                     p="$3"
-        //                     bg="$background"
-        //                     borderColor="$borderColor"
-        //                     onChangeText={onChange}
-        //                     onBlur={onBlur}
-        //                     value={value}
-        //                 />
-        //             )}
-        //         />
-        //         {/* Display validation error if the email field is empty */}
-        //         {errors.email && <Text color="$red">Email is required</Text>}
+      			<View style={[styles.signUpUserInput, styles.inputPosition]}>
+                {/* full name  input */}
+                    <Controller
+                        control={control}
+                        name="name"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={[ styles.textInput, styles.fullNameContainer, styles.containerShadowBox]}
+                                placeholder="Full Name"
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                            />
+                        )}
+                    />
+                    {errors.name && <Text >Name is required</Text>}
 
-        //         {/* Password Input */}
-        //         <Controller
-        //             control={control}
-        //             name="password"
-        //             render={({ field: { onChange, onBlur, value } }) => (
-        //                 <Input
-        //                     placeholder="Password"
-        //                     p="$3"
-        //                     bg="$background"
-        //                     borderColor="$borderColor"
-        //                     secureTextEntry // Masks the password input
-        //                     onChangeText={onChange}
-        //                     onBlur={onBlur}
-        //                     value={value}
-        //                 />
-        //             )}
-        //         />
-        //         {/* Display validation error if the password field is empty */}
-        //         {errors.password && <Text color="$red">Password is required</Text>}
+                {/* password input */}
+                    <Controller
+                        control={control}
+                        name="password"
+                        render={({ field: { onChange, onBlur, value } }) => (
+        				    <TextInput 
+                                style={[ styles.textInput, styles.passwordContainer, styles.containerShadowBox]} 
+                                placeholder="Password"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                            />
+                        )}
+                    />
+                    {errors.password && <Text style={{ color: 'red' }}>Password is required</Text>}
 
-        //         {/* Confirm Password Input */}
-        //         <Controller
-        //             control={control}
-        //             name="confirmPassword"
-        //             render={({ field: { onChange, onBlur, value } }) => (
-        //                 <Input
-        //                     placeholder="Confirm Password"
-        //                     p="$3"
-        //                     bg="$background"
-        //                     borderColor="$borderColor"
-        //                     secureTextEntry // Masks the confirm password input
-        //                     onChangeText={onChange}
-        //                     onBlur={onBlur}
-        //                     value={value}
-        //                 />
-        //             )}
-        //         />
-        //         {/* Display validation error if the confirm password field is empty */}
-        //         {errors.confirmPassword && <Text color="$red">Confirm Password is required</Text>}
-        //     </Stack>
+                {/* confirm password input */}
+                    <Controller
+                        control={control}
+                        name="confirmPassword"
+                        render={({ field: { onChange, onBlur, value } }) => (
+        				    <TextInput 
+                                style={[ styles.textInput, styles.confirmPasswordContainer, styles.containerShadowBox]} 
+                                placeholder="Confirm Password"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                            />
+                        )}
+                    />
+                    {errors.confirmPassword && <Text style={{ color: 'red' }}>Confirm Password is required</Text>}
 
-        //     {/* Submit Button */}
-        //     <Button
-        //         size="$4"
-        //         width="100%"
-        //         mt="$4"
-        //         onPress={handleSubmit(onSubmit)} // Handle form submission
-        //     >
-        //         Sign Up
-        //     </Button>
+                {/* email input */}
+                    <Controller
+                        control={control}
+                        name="email"
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                style={[ styles.textInput, styles.email, styles.containerShadowBox]}
+                                placeholder="Email"
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                            />
+                        )}
+                    />	
+                    {errors.email && <Text style={{ color: 'red' }}>Email is required</Text>}
+                    
+      			</View>
 
-        //     {/* Link to navigate to the Sign In screen */}
-        //     <Text mt="$3" color="$colorLight">
-        //         Already have an account?{' '}
-        //         <Text
-        //             onPress={() => navigation.navigate("SignIn")}
-        //         >
-        //             Sign In
-        //         </Text>
-        //     </Text>
+                {/* sign up submission button */}
+      			<TouchableOpacity style={[styles.signUpButton, styles.signLayout]} activeOpacity={0.8} onPress={handleSubmit(onSubmit)}>
+        				<Image style={[styles.signUpContainer, styles.signLayout]} resizeMode="cover" source={require("../../../assets/SignUpContainer.png")} />
+        				<Text style={[styles.confirmPasswordTemp1, styles.backTypo]}>Sign up</Text>
+      			</TouchableOpacity>
 
-        //     {/* Link to navigate back to the Welcome screen */}
-        //     <Text mt="$3" color="$colorLight">
-        //         <Text
-        //             onPress={() => navigation.navigate("Welcome")}
-        //         >
-        //             Back to Welcome
-        //         </Text>
-        //     </Text>
-        // </YStack>
-     );
+				<View style={[styles.orSeperator, styles.orLayout]}>
+        				<Text style={[styles.or, styles.orLayout]}>Or</Text>
+        				<View style={[styles.orSeperatorChild, styles.seperatorLayout]} />
+        				<View style={[styles.orSeperatorItem, styles.seperatorLayout]} />
+      			</View>
+
+                {/* navigaiton to sing in screen if user already has an account */}
+      			<Text style={[styles.alreadyHaveAn, styles.signInTypo]}>{`Already have an account? `}</Text>
+      			<Text style={[styles.signIn, styles.signInTypo]} onPress={()=> navigation.navigate("SignIn")}>
+                    Sign in.
+                </Text>
+
+                {/* continue with google button */}
+                {/* work in progress still */}
+      			<TouchableOpacity style={[styles.googleSignInButton, styles.signLayout]}  activeOpacity={0.8}>
+        				<Image style={[styles.signUpContainer, styles.signLayout]} resizeMode="cover" source={require("../../../assets/GoogleSignInButton.png")} />
+      			</TouchableOpacity>
+
+    
+                {/* back to home screen button */}
+      			<TouchableOpacity style={[styles.backButton, styles.backLayout]} activeOpacity={0.8} onPress={()=> navigation.navigate("Welcome")}>
+        				<Image resizeMode="cover" source={require("../../../assets/BackButton.png")} />
+      			</TouchableOpacity>
+    		</View>);
 };
-
 
 const styles = StyleSheet.create({
     textInput: {
@@ -302,6 +297,7 @@ const styles = StyleSheet.create({
     		fontWeight: "700",
     		fontFamily: "Quicksand-Bold",
     		height: 150,
+			left: 39,
     		textAlign: "left",
     		color: "#343a40"
   	},
@@ -462,5 +458,4 @@ const styles = StyleSheet.create({
   	}
 });
 
-// Export the SignupScreen component as the default export
-export default SignupScreen;
+export default FigmaSignUpScreen;

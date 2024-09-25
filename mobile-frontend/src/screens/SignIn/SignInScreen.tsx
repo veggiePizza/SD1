@@ -7,6 +7,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import the signIn function from Firebase
 import { authInstance } from "../../services/firebase"; // Import Firebase authentication instance
+import FigmaSignInScreen from './FigmaSignInScreen';
 
 // Define an interface to type the form data for user sign-in
 interface IUser {
@@ -61,87 +62,88 @@ const SignInScreen = () => {
 
     // Render the sign-in form
     return (
-        <YStack f={1} ai="center" jc="center" p="$4" bg="$background">
-            {/* Title for the sign-in screen */}
-            <Text
-                fontFamily="$heading"
-                fontSize="$6"
-                color="$color"
-                mb="$4"
-            >
-                Sign In
-            </Text>
-            {/* Form stack to contain input fields */}
-            <Stack space="$3" width="100%">
-                {/* Email Input */}
-                <Controller
-                    control={control}
-                    name="email"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <Input
-                            placeholder="Email"
-                            p="$3"
-                            bg="$background"
-                            borderColor="$borderColor"
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value}
-                        />
-                    )}
-                />
-                {/* Display validation error if the email field is empty */}
-                {errors.email && <Text color="$red">Email is required</Text>}
+        <FigmaSignInScreen/>
+        // <YStack f={1} ai="center" jc="center" p="$4" bg="$background">
+        //     {/* Title for the sign-in screen */}
+        //     <Text
+        //         fontFamily="$heading"
+        //         fontSize="$6"
+        //         color="$color"
+        //         mb="$4"
+        //     >
+        //         Sign In
+        //     </Text>
+        //     {/* Form stack to contain input fields */}
+        //     <Stack space="$3" width="100%">
+        //         {/* Email Input */}
+        //         <Controller
+        //             control={control}
+        //             name="email"
+        //             render={({ field: { onChange, onBlur, value } }) => (
+        //                 <Input
+        //                     placeholder="Email"
+        //                     p="$3"
+        //                     bg="$background"
+        //                     borderColor="$borderColor"
+        //                     onChangeText={onChange}
+        //                     onBlur={onBlur}
+        //                     value={value}
+        //                 />
+        //             )}
+        //         />
+        //         {/* Display validation error if the email field is empty */}
+        //         {errors.email && <Text color="$red">Email is required</Text>}
 
-                {/* Password Input */}
-                <Controller
-                    control={control}
-                    name="password"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <Input
-                            placeholder="Password"
-                            p="$3"
-                            bg="$background"
-                            borderColor="$borderColor"
-                            secureTextEntry // Masks the password input
-                            onChangeText={onChange}
-                            onBlur={onBlur}
-                            value={value}
-                        />
-                    )}
-                />
-                {/* Display validation error if the password field is empty */}
-                {errors.password && <Text color="$red">Password is required</Text>}
-            </Stack>
+        //         {/* Password Input */}
+        //         <Controller
+        //             control={control}
+        //             name="password"
+        //             render={({ field: { onChange, onBlur, value } }) => (
+        //                 <Input
+        //                     placeholder="Password"
+        //                     p="$3"
+        //                     bg="$background"
+        //                     borderColor="$borderColor"
+        //                     secureTextEntry // Masks the password input
+        //                     onChangeText={onChange}
+        //                     onBlur={onBlur}
+        //                     value={value}
+        //                 />
+        //             )}
+        //         />
+        //         {/* Display validation error if the password field is empty */}
+        //         {errors.password && <Text color="$red">Password is required</Text>}
+        //     </Stack>
 
-            {/* Sign-In Button */}
-            <Button
-                size="$4"
-                width="100%"
-                mt="$4"
-                onPress={handleSubmit(onSubmit, onError)} // Handle form submission
-            >
-                Sign In
-            </Button>
+        //     {/* Sign-In Button */}
+        //     <Button
+        //         size="$4"
+        //         width="100%"
+        //         mt="$4"
+        //         onPress={handleSubmit(onSubmit, onError)} // Handle form submission
+        //     >
+        //         Sign In
+        //     </Button>
 
-            {/* Link to navigate to the Sign Up screen */}
-            <Text mt="$3" color="$colorLight">
-                Don’t have an account?{' '}
-                <Text
-                    onPress={() => navigation.navigate("SignUp")}
-                >
-                    Sign Up
-                </Text>
-            </Text>
+        //     {/* Link to navigate to the Sign Up screen */}
+        //     <Text mt="$3" color="$colorLight">
+        //         Don’t have an account?{' '}
+        //         <Text
+        //             onPress={() => navigation.navigate("SignUp")}
+        //         >
+        //             Sign Up
+        //         </Text>
+        //     </Text>
 
-            {/* Link to navigate back to the Welcome screen */}
-            <Text mt="$3" color="$colorLight">
-                <Text
-                    onPress={() => navigation.navigate("Welcome")}
-                >
-                    Back to Welcome
-                </Text>
-            </Text>
-        </YStack>
+        //     {/* Link to navigate back to the Welcome screen */}
+        //     <Text mt="$3" color="$colorLight">
+        //         <Text
+        //             onPress={() => navigation.navigate("Welcome")}
+        //         >
+        //             Back to Welcome
+        //         </Text>
+        //     </Text>
+        // </YStack>
     );
 };
 
