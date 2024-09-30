@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Text, YStack, Stack } from 'tamagui';
 import { useNavigation } from '@react-navigation/native';
-import { AuthScreenNavigationType } from "../../navigation/types";
+import { AuthScreenNavigationType } from "../../../navigation/types";
 import FigmaWelcomeScreen from './FigmaWelcomeScreen';
 
 const WelcomeScreen = () => {

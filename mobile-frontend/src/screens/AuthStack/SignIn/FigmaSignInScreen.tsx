@@ -2,11 +2,11 @@ import * as React from "react";
 import { Animated, Image, StyleSheet, Text, View, TouchableOpacity, Pressable, TextInput, Easing } from "react-native";
 
 import { useNavigation } from '@react-navigation/native';
-import { AuthScreenNavigationType } from "../../navigation/types";
+import { AuthScreenNavigationType } from "../../../navigation/types";
 import { useForm, Controller } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import the signIn function from Firebase
-import { authInstance } from "../../services/firebase"; // Import Firebase authentication instance
+import { authInstance } from "../../../services/firebase"; // Import Firebase authentication instance
 
 
 // Define an interface to type the form data for user sign-in
@@ -76,7 +76,7 @@ const FigmaSignInScreen = () => {
   	
   	return (
     		<View style={styles.lenditSignUpIphone141}>
-      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../assets/Background.png")}/>
+      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../../assets/Background.png")}/>
 
       			{/* <Text style={styles.welcomeBackLender}>Welcome Back, Lender!</Text> */}
 
@@ -132,7 +132,7 @@ const FigmaSignInScreen = () => {
 
                 {/* Sign in button */}
       			<TouchableOpacity style={[styles.signUpButton, styles.signLayout]} activeOpacity={0.8} onPress={handleSubmit(onSubmit)}>
-        				<Image style={[styles.signUpContainer, styles.signUpContainerPosition]} resizeMode="cover" source={require("../../../assets/SignUpContainer.png")} />
+        				<Image style={[styles.signUpContainer, styles.signUpContainerPosition]} resizeMode="cover" source={require("../../../../assets/SignUpContainer.png")} />
         				<Text style={[styles.signIn, styles.backTypo]}>{`Sign in `}</Text>
       			</TouchableOpacity>
 
@@ -144,7 +144,7 @@ const FigmaSignInScreen = () => {
       			
                 {/* Google sign in Button */}
         		<TouchableOpacity style={[styles.googleSignInButton, styles.signLayout]} activeOpacity={0.8}>
-          				<Image style={[styles.signUpContainer, styles.signUpContainerPosition]} resizeMode="cover" source={require("../../../assets/GoogleSignInButton.png")} />
+          				<Image style={[styles.signUpContainer, styles.signUpContainerPosition]} resizeMode="cover" source={require("../../../../assets/GoogleSignInButton.png")} />
         		</TouchableOpacity>
 
                  {/* navigaiton to sing in screen if user already has an account */}
@@ -156,10 +156,10 @@ const FigmaSignInScreen = () => {
 
                 {/* Back button */}
         		<TouchableOpacity style={[styles.backButton, styles.backLayout]} activeOpacity={0.8} onPress={()=> navigation.navigate("Welcome")}>
-          			<Image resizeMode="cover" source={require("../../../assets/BackButton.png")} />
+          			<Image resizeMode="cover" source={require("../../../../assets/BackButton.png")} />
         		</TouchableOpacity>
         		
-                <Image style={styles.lenddittIcon} resizeMode="cover" source={require("../../../assets/NewLenditLogo.png")} />
+                <Image style={styles.lenddittIcon} resizeMode="cover" source={require("../../../../assets/NewLenditLogo.png")} />
         	</View>);
 };
       			

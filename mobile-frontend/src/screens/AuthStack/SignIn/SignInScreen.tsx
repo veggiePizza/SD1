@@ -2,11 +2,11 @@
 import React from 'react';
 import { Button, Input, Stack, Text, YStack } from 'tamagui';
 import { useNavigation } from '@react-navigation/native';
-import { AuthScreenNavigationType } from "../../navigation/types";
+import { AuthScreenNavigationType } from "../../../navigation/types";
 import { useForm, Controller } from 'react-hook-form';
 import { Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import the signIn function from Firebase
-import { authInstance } from "../../services/firebase"; // Import Firebase authentication instance
+import { authInstance } from "../../../services/firebase"; // Import Firebase authentication instance
 import FigmaSignInScreen from './FigmaSignInScreen';
 
 // Define an interface to type the form data for user sign-in

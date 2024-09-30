@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
-import { AuthScreenNavigationType } from "../../navigation/types";
+import { AuthScreenNavigationType } from "../../../navigation/types";
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useForm, Controller } from 'react-hook-form';
-import { authInstance } from "../../services/firebase"
+import { authInstance } from "../../../services/firebase"
 import { Animated, Image, StyleSheet, Text, View, TouchableOpacity, Pressable, TextInput, Easing} from "react-native";
 
 // import "@fontsource/quicksand"; // Defaults to weight 400
@@ -88,7 +88,7 @@ const FigmaSignUpScreen = () => {
   	
   	return (
     		<View style={styles.lenditSignUpIphone}>
-      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../assets/Background.png")}/>
+      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../../assets/Background.png")}/>
 
       			<Animated.Text style={[styles.letsGetStarted, { transform: [{ translateX: slideAnimation }] }]}>
   					Let's get started
@@ -166,7 +166,7 @@ const FigmaSignUpScreen = () => {
 
                 {/* sign up submission button */}
       			<TouchableOpacity style={[styles.signUpButton, styles.signLayout]} activeOpacity={0.8} onPress={handleSubmit(onSubmit)}>
-        				<Image style={[styles.signUpContainer, styles.signLayout]} resizeMode="cover" source={require("../../../assets/SignUpContainer.png")} />
+        				<Image style={[styles.signUpContainer, styles.signLayout]} resizeMode="cover" source={require("../../../../assets/SignUpContainer.png")} />
         				<Text style={[styles.confirmPasswordTemp1, styles.backTypo]}>Sign up</Text>
       			</TouchableOpacity>
 
@@ -185,13 +185,13 @@ const FigmaSignUpScreen = () => {
                 {/* continue with google button */}
                 {/* work in progress still */}
       			<TouchableOpacity style={[styles.googleSignInButton, styles.signLayout]}  activeOpacity={0.8}>
-        				<Image style={[styles.signUpContainer, styles.signLayout]} resizeMode="cover" source={require("../../../assets/GoogleSignInButton.png")} />
+        				<Image style={[styles.signUpContainer, styles.signLayout]} resizeMode="cover" source={require("../../../../assets/GoogleSignInButton.png")} />
       			</TouchableOpacity>
 
     
                 {/* back to home screen button */}
       			<TouchableOpacity style={[styles.backButton, styles.backLayout]} activeOpacity={0.8} onPress={()=> navigation.navigate("Welcome")}>
-        				<Image resizeMode="cover" source={require("../../../assets/BackButton.png")} />
+        				<Image resizeMode="cover" source={require("../../../../assets/BackButton.png")} />
       			</TouchableOpacity>
     		</View>);
 };

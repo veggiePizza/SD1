@@ -13,10 +13,11 @@ SignUp: Make a basic SignUp Screen that works with the firebase API to let them 
 
 ==========NEXT===============
 
-SignIn: The functionality is working to signin the user as shown by console logs but it should navigate to home screen
+Logout: Get logout functioning for mobile - Done- Logout button succesfully logs out from profile screen
+HomeScreen: figure out what screens will go on this and lay out the navigation for them
+ProfileScreen: Make a basic profile screen
 
-SignUp: The functionality is working to signup the user as shown by console logs but it should also navigate to home screen
 
-Home Screen: Build out a base home screen
+
 
 

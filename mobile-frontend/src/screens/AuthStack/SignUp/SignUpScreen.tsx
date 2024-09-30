@@ -3,10 +3,10 @@ import * as React from 'react';
 import { Button, Input, Stack, YStack } from 'tamagui';
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
-import { AuthScreenNavigationType } from "../../navigation/types";
+import { AuthScreenNavigationType } from "../../../navigation/types";
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useForm, Controller } from 'react-hook-form';
-import { authInstance } from "../../services/firebase"
+import { authInstance } from "../../../services/firebase"
 import {Image, StyleSheet, Text, View, TouchableOpacity, Pressable, TextInput} from "react-native";
 import FigmaSignUpScreen from './FigmaSignUpScreen';
 

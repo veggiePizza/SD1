@@ -6,9 +6,9 @@ import React from "react";
 import { AuthStackParamList } from "./types";
 
 // Importing the screens used in the authentication flow
-import WelcomeScreen from "../screens/Welcome/WelcomeScreen";
-import SignInScreen from "../screens/SignIn/SignInScreen";
-import SignUpScreen from "../screens/SignUp/SignUpScreen";
+import WelcomeScreen from "../screens/AuthStack/Welcome/WelcomeScreen";
+import SignInScreen from "../screens/AuthStack/SignIn/SignInScreen";
+import SignUpScreen from "../screens/AuthStack/SignUp/SignUpScreen";
 
 // Creating a stack navigator instance with type safety for the authentication stack
 const Stack = createNativeStackNavigator<AuthStackParamList>();

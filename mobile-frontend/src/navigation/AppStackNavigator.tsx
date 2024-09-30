@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import React from "react"
 
 // Import the BottomTabNavigator component which will be used as a screen in the stack
-import BottomTabNavigator from "./BottomTabNavigator"
+import BottomTabNavigator from "./BottomTabNavigator/BottomTabNavigator"
 
 // Import the type definitions for the stack navigator's parameter list
 import { AppStackParamList } from "./types"

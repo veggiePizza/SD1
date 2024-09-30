@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Image, StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { AuthScreenNavigationType } from "../../navigation/types";
+import { AuthScreenNavigationType } from "../../../navigation/types";
 
 
 const FigmaWelcomeScreen = () => {
@@ -11,13 +11,13 @@ const FigmaWelcomeScreen = () => {
   	
   	return (
     		<View style={styles.lenditSignUpIphone141}>
-      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../assets/Background.png")}/>
+      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../../assets/Background.png")}/>
       			<TouchableOpacity style={[styles.signInButton, styles.signLayout, { zIndex: 1 }]} activeOpacity={0.8}  onPress={()=> navSignIn.navigate("SignIn")}>
-        				<Image style={styles.signInContainer} resizeMode="cover" source={require("../../../assets/SignUpContainer.png")} />
+        				<Image style={styles.signInContainer} resizeMode="cover" source={require("../../../../assets/SignUpContainer.png")} />
         				<Text style={[styles.signIn, styles.signTypo]}>Sign in</Text>
       			</TouchableOpacity>
       			<TouchableOpacity style={[styles.signUpButton, styles.signLayout]} activeOpacity={0.8}  onPress={()=> navSignUp.navigate("SignUp")}>
-        				<Image style={styles.signInContainer} resizeMode="cover" source={require("../../../assets/SignUpContainer.png")} />
+        				<Image style={styles.signInContainer} resizeMode="cover" source={require("../../../../assets/SignUpContainer.png")} />
         				<Text style={[styles.signUp, styles.signTypo]}>Sign up</Text>
       			</TouchableOpacity>
       			<View style={styles.orSeperator}>
@@ -25,7 +25,7 @@ const FigmaWelcomeScreen = () => {
         				<View style={[styles.orSeperatorChild, styles.seperatorLayout]} />
         				<View style={[styles.orSeperatorItem, styles.seperatorLayout]} />
       			</View>
-      			<Image style={styles.newlenditlogo1Icon} resizeMode="cover" source={require("../../../assets/NewLenditLogo.png")} />
+      			<Image style={styles.newlenditlogo1Icon} resizeMode="cover" source={require("../../../../assets/NewLenditLogo.png")} />
     		</View>);
 };
 
