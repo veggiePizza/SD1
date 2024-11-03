@@ -95,13 +95,14 @@ const LeftFilterSection = () => {
 
 const RightProductSection = () => (
   <RightContainer>
-    <Card backgroundImage={require("../assets/images/gradient.png")}>
+    <Card backgroundImage={require("../assets/images/grad_back.png")}>
       <CardTitle>Summary</CardTitle>
       <RectangleCard>
         <DateContainer>
           <DateTitle>Start Date</DateTitle>
           <DateValue>10/01/2024</DateValue>
         </DateContainer>
+        <CenterText>to</CenterText> 
         <DateContainer>
           <DateTitle>End Date</DateTitle>
           <DateValue>10/07/2024</DateValue>
@@ -129,31 +130,40 @@ const LeftContainer = styled.div`
 `;
 
 const RightContainer = styled.div`
-  width: 50%;
   padding: 20px;
 `;
 
 const Title = styled.h2`
-  margin-bottom: 10px;
+    text-align: center;
+  margin-bottom: 50px;
 `;
 
 const PaymentInfo = styled.p`
   margin: 0;
   font-size: 14px;
+  color: #575757;
 `;
 
 const StyledStripe = styled.span`
   font-family: 'Courier New', Courier, monospace; /* Change this to desired font */
-  font-weight: bold;
+  font-weight: 900;
+  color: #000000;
+  font-size: 20px;
 `;
 
 const Subtitle = styled.p`
-  margin: 10px 0;
+  margin: 20px 0;
+    color: #575757;
+
 `;
 
 const InputLabel = styled.label`
   margin-top: 10px;
+    margin-bottom: 5px;
+font-size: 12px;
   display: block;
+      color: #575757;
+
 `;
 
 const Input = styled.input`
@@ -162,6 +172,7 @@ const Input = styled.input`
   border: 1px solid #e8e8e8;
   border-radius: 5px;
   margin-bottom: 10px;
+   background-color: #EEEEEE;
 `;
 
 const CardNumberContainer = styled.div`
@@ -170,14 +181,14 @@ const CardNumberContainer = styled.div`
 `;
 
 const CardInput = styled(Input)`
-  width: 80%;
-  padding-left: 30px; /* Adjust for icon */
+  width: 75%;
+  padding-left: 36px; /* Adjust for icon */
 `;
 
 const CardIcon = styled.div`
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 6px;
   font-size: 20px; /* Adjust as needed */
 `;
 
@@ -190,8 +201,7 @@ const CardExpiryCVC = styled.div`
 const DiscountContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+  align-items: flex-start;
 `;
 
 const ApplyButton = styled.button`
@@ -201,6 +211,7 @@ const ApplyButton = styled.button`
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
+  margin-top: 1px;
 `;
 
 const PayButton = styled.button`
@@ -215,48 +226,67 @@ const PayButton = styled.button`
 `;
 
 const Card = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background-image: url(${(props) => props.backgroundImage});
+  background-size: fit; /* Cover the entire area */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent repeating */
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  height: 500px;
 `;
 
+
 const CardTitle = styled.h3`
-  margin-bottom: 10px;
+font-size: 32px;
+  margin-bottom: 24px;
 `;
 
 const RectangleCard = styled.div`
   display: flex;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  align-items: center; /* Align items vertically centered */
+  justify-content: space-between; /* Space between the items */
+  width: 420px; /* Full width of the card */
+  margin: 50px 0; /* Space above and below */
+  padding: 20px 10px; /* Padding inside the rectangle */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Optional border */
+  border-radius: 10px; /* Optional border radius */
+  background: rgba(255, 255, 255, 0.5); /* Optional background for visibility */
 `;
 
+const CenterText = styled.span`
+  font-weight: bold; /* Make the text bold */
+  color: #0B4575; /* Adjust color as needed */
+  margin: 0 10px; /* Margin to space out from DateContainers */
+`;
 const DateContainer = styled.div`
   flex: 1;
   text-align: center;
 `;
 
 const DateTitle = styled.span`
-  font-weight: bold;
 `;
 
 const DateValue = styled.span`
   display: block;
+    font-weight: bold;
+color: #0B4575;
 `;
 
 const RentalInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 `;
 
 const HorizontalLine = styled.hr`
-  margin: 10px 0;
+  border: none; /* Remove default border */
+  height: 1px; /* Set height of the line */
+  background-color: #000000; /* Set the desired color */
+  margin: 20px 0; /* Add margin above and below the line */
 `;
+
 
 const Total = styled(RentalInfo)`
   font-weight: bold;
@@ -270,7 +300,6 @@ const Disclaimer = styled.p`
 const Agreement = styled.p`
   text-align: center;
   font-size: 12px;
-  color: gray;
 `;
 
 const Image2Row = styled.div`
@@ -342,6 +371,8 @@ const MainContent = styled.div`
   display: flex;
   width: 100%;
   margin-top: 20px;
+    justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
 `;
 
 export default Untitled;
