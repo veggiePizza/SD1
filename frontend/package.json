@@ -11,13 +11,20 @@
     "js-cookie": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    
     "react-redux": "^7.2.9",
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "uuid": "3.3.2",
+    "styled-components": "^4.3.2",
+    "react-native-vector-icons": "6.6.0",
+    "react-native-web": "^0.18.10",
+    "react-list": "^0.8.11"
+
   },
     "scripts": {
     "start": "craco start",
