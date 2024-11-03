@@ -1,0 +1,54 @@
+
+/* =================================== */
+  
+  .aaa {
+    background-color: red;
+    width: 400px;
+    height: 500px;
+  }
+  
+  /* =================================== */
+  
+  .dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 0.25rem;
+    background-color: #e4e4e4;
+    border-radius: 50vh;
+    cursor: pointer;
+  }
+  
+  .dot.dot-active {
+    background-color: #007AFF;
+  }
+
+  .carousel-container{
+    height: 600px;
+  }
+
+  .slide {
+    color: #FFFFFF; 
+    font-size: 36px; 
+    font-weight: 700;
+    text-align: left;
+    background-size: cover; /* Ensures the image covers the entire div */
+    background-position: center; /* Centers the image */
+    width: 620px; /* Make sure the width is set */
+    height: 550px; /* Make sure the height is set */
+    border-radius: 15px;
+    display: flex; /* Enable Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding-left: 60px;
+    padding-right: 60px;
+
+  }
+  
+  
