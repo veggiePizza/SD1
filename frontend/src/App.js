@@ -18,6 +18,8 @@ import "./icons.js";
 import Landing from "./screens/Landing.js";
 import Booking from "./screens/Booking";
 import Tools from "./screens/Tools";
+import AuthPage from "./screens/AuthPage";
+import PaymentPage from "./screens/PaymentPage";
 
 import "./App.css";
 
@@ -47,6 +49,9 @@ function App() {
             <Route path="/Landing" element={<Landing />} />
             <Route path="/Booking" element={<Booking />} />
             <Route path="/Tools" element={<Tools />} />
+            <Route path="/AuthPage" element={<AuthPage />} />
+            <Route path="/PaymentPage" element={<PaymentPage />} />
+
           </Routes>
           <ToastContainer />
         </>
