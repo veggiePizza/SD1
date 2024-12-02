@@ -2,9 +2,10 @@ const express = require('express');
 require('express-async-errors');
 const morgan = require('morgan');
 const cors = require('cors');
-const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const csurf = require('csurf');  // Import csurf
+const stripeRoutes = require('./routes/Stripe/stripe');  // Import Stripe routes
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
@@ -15,27 +16,31 @@ app.use(cookieParser());
 app.use(express.json());
 
 if (!isProduction) {
-    // enable cors only in development
+    // Enable CORS only in development
     app.use(cors());
 }
 
-// helmet helps set a variety of headers to better secure your app
+// Helmet helps set a variety of headers to better secure your app
 app.use(
     helmet.crossOriginResourcePolicy({
         policy: "cross-origin"
     })
 );
 
-// Set the _csrf token and create req.csrfToken method
-app.use(
-    csurf({
-        cookie: {
-            secure: isProduction,
-            sameSite: isProduction && "Lax",
-            httpOnly: true
-        }
-    })
-);
+
+// Re-enable CSRF middleware
+// app.use(
+//     csurf({
+//         cookie: {
+//             secure: isProduction,
+//             sameSite: isProduction ? "Lax" : "Strict",
+//             httpOnly: true,
+//         }
+//     })
+// );
+
+// Use the Stripe routes (this would be the route to handle payment-related operations)
+ app.use('/stripe', stripeRoutes);  // Add '/stripe' prefix to all Stripe routes
 
 const routes = require('./routes');
 app.use(routes);
@@ -51,7 +56,7 @@ app.use((_req, _res, next) => {
 const { ValidationError } = require('sequelize');
 
 app.use((err, _req, _res, next) => {
-    // check if error is a Sequelize error:
+    // Check if error is a Sequelize error:
     if (err instanceof ValidationError) {
         err.errors = err.errors.map((e) => e.message);
         err.title = 'Validation error';

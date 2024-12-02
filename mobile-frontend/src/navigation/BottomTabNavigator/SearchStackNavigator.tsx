@@ -10,6 +10,7 @@ import HomeScreen from "../../screens/Home/HomeScreen"
 import SearchScreen from "../../screens/BottomTab/SearchStack/SearchScreen";
 import SearchResultScreen from "../../screens/BottomTab/SearchStack/SearchResultScreen";
 import ToolDetailsScreen from "../../screens/BottomTab/SearchStack/ToolDetailsScreen";
+import AddToolScreen from "../../screens/BottomTab/SearchStack/AddToolScreen";
 
 
 // Create a native stack navigator with type safety using the HomeStackParamList type
@@ -41,6 +42,14 @@ const SearchStackNavigator = () => {
             <Stack.Screen
                 name="ToolDetails"
                 component={ToolDetailsScreen}
+                options={{
+                    // Disable the header for this screen
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="AddTool"
+                component={AddToolScreen}
                 options={{
                     // Disable the header for this screen
                     headerShown: false,

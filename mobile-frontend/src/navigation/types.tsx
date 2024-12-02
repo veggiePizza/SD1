@@ -14,6 +14,7 @@ export type AuthStackParamList = {
     Welcome: undefined;
     SignIn: undefined;
     SignUp: undefined;
+    AccountSettings: undefined;
 };
 
 export type RootBottomTabParamList = {
@@ -28,9 +29,11 @@ export type RootBottomTabParamList = {
 export type SearchStackParamList = {
     Search: undefined;
     SearchResult: { query: string };
-    ToolDetails: { toolID: string };
+    ToolDetails: { tool: { name: string, description: string, price: number, address: string, city: string, state: string, country: string, lat: number, lng: number } };
     MapView: undefined; // Optional map view for tools
+    AddTool: undefined;
 };
+
 
 // Wishlist
 export type WishListStackParamList = {
@@ -46,10 +49,12 @@ export type BookingsStackParamList = {
 };
 
 // Messages
+// Messages Stack Parameters
 export type MessagesStackParamList = {
     Inbox: undefined;
-    Chat: undefined // Chat with specific host
+    Chat: { senderId: string, receiverId: string };  // partnerId will be passed as a parameter
 };
+
 
 // Profile
 export type ProfileStackParamList = {

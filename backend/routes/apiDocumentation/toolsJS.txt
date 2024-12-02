@@ -1,0 +1,176 @@
+Tools API Documentation
+
+This file provides routes and logic for managing tools, reviews, reservations, and tool images in the system. It uses Express.js, Sequelize ORM, and includes various CRUD operations and validation.
+
+Routes
+
+1. GET /tools
+Description: Retrieves a list of tools with optional query parameters to filter the results by location and price.
+
+Query Parameters:
+
+page: (optional) The page number (default is 1).
+size: (optional) The number of results per page (default is 20).
+minLat: (optional) Minimum latitude for filtering.
+maxLat: (optional) Maximum latitude for filtering.
+minLng: (optional) Minimum longitude for filtering.
+maxLng: (optional) Maximum longitude for filtering.
+minPrice: (optional) Minimum price for filtering.
+maxPrice: (optional) Maximum price for filtering.
+Response:
+
+Returns an array of tools with their respective average rating and preview image.
+
+
+2. GET /tools/current
+Description: Retrieves all tools owned by the authenticated user.
+
+Authentication Required: Yes
+
+Response:
+
+Returns an array of tools owned by the current user, including average ratings and preview images.
+3. GET /tools/:id
+Description: Retrieves the details of a specific tool by ID.
+
+Parameters:
+
+id: The ID of the tool.
+Response:
+
+Returns the tool's details including its reviews, images, and owner information.
+4. POST /tools
+Description: Creates a new tool.
+
+Authentication Required: Yes
+
+Request Body:
+
+address, city, state, country, lat, lng, name, description, price
+Response:
+
+Returns the created tool.
+5. POST /tools/:id/images
+Description: Adds an image to a tool based on its ID.
+
+Authentication Required: Yes
+
+Parameters:
+
+id: The ID of the tool to which the image is added.
+Request Body:
+
+url: The URL of the image.
+preview: Boolean indicating if this image is the preview image.
+Response:
+
+Returns the newly added image's ID, URL, and preview status.
+6. PUT /tools/:id
+Description: Edits an existing tool.
+
+Authentication Required: Yes
+
+Parameters:
+
+id: The ID of the tool to update.
+Request Body:
+
+address, city, state, country, lat, lng, name, description, price
+Response:
+
+Returns the updated tool.
+7. DELETE /tools/:id
+Description: Deletes a tool.
+
+Authentication Required: Yes
+
+Parameters:
+
+id: The ID of the tool to delete.
+Response:
+
+Returns a success message if the tool is successfully deleted.
+8. GET /tools/:id/reviews
+Description: Retrieves all reviews for a tool.
+
+Parameters:
+
+id: The ID of the tool.
+Response:
+
+Returns a list of reviews for the tool, including user information and review images.
+9. POST /tools/:id/reviews
+Description: Creates a review for a tool.
+
+Authentication Required: Yes
+
+Parameters:
+
+id: The ID of the tool being reviewed.
+Request Body:
+
+review: The review text.
+stars: Rating between 1 and 5 stars.
+Response:
+
+Returns the newly created review.
+10. GET /tools/:id/reservations
+Description: Retrieves all reservations for a tool.
+
+Parameters:
+
+id: The ID of the tool.
+Response:
+
+Returns a list of reservations for the tool, including reservation details.
+11. POST /tools/:id/reservations
+Description: Creates a reservation for a tool.
+
+Authentication Required: Yes
+
+Parameters:
+
+id: The ID of the tool to reserve.
+Request Body:
+
+startDate: The start date of the reservation.
+endDate: The end date of the reservation.
+Response:
+
+Returns the newly created reservation.
+12. GET /tools/:id/images
+Description: Retrieves all images for a tool.
+
+Parameters:
+
+id: The ID of the tool.
+Response:
+
+Returns an array of images associated with the tool.
+Middleware and Validation
+
+Validation Middleware
+validateTool: Validates the request body when creating or updating a tool.
+validateReview: Validates the request body when creating a review.
+validateDate: Validates the reservation date (ensures endDate is after startDate).
+validateQuery: Validates query parameters for the GET /tools route (e.g., pagination and filtering).
+Authentication Middleware
+requireAuth: Ensures the user is authenticated.
+authIsTool: Ensures the user is the owner of the tool before editing or deleting it.
+authIsToolNot: Ensures the user is not the owner of the tool before making a reservation.
+Reservation Conflict
+reservationConflict: Checks for conflicts when creating a reservation.
+Models
+
+This API interacts with the following models:
+
+Tool: Represents a tool in the system with details like name, address, price, etc.
+Review: Represents a review left by a user for a tool.
+Reservation: Represents a reservation made for a tool.
+ToolImage: Represents an image associated with a tool.
+User: Represents the user who owns or reserves a tool.
+ReviewImage: Represents images attached to reviews.
+Environment Variables
+
+NODE_ENV: Defines the environment (production, development, etc.).
+SCHEMA: The schema to be used in production for database queries.

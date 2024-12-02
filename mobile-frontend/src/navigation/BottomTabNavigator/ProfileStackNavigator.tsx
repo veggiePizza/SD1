@@ -12,9 +12,11 @@ import PaymentMethodsScreen from "../../screens/BottomTab/ProfileStack/PaymentMe
 import PersonalInformationScreen from "../../screens/BottomTab/ProfileStack/PersonalInformationScreen";
 import ReviewsScreen from "../../screens/BottomTab/ProfileStack/ReviewsScreen";
 import ProfileOverViewScreen from "../../screens/BottomTab/ProfileStack/ProfileOverviewScreen";
+import firebase from "firebase/compat";
 
 // Create a native stack navigator with type safety using the HomeStackParamList type
 const Stack = createNativeStackNavigator<ProfileStackParamList>()
+
 
 // Define the stack navigator component for the Home section of the app
 const ProfileStackNavigator = () => {

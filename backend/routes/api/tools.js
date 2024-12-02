@@ -1,10 +1,11 @@
 const express = require('express');
 const { Tool, Review, Reservation, ToolImage, User, ReviewImage } = require('../../db/models');
-const { requireAuth, authIsTool, authIsToolNot, reservationConflict } = require('../../utils/auth');
+const { requireAuth, authIsTool, authIsToolNot, reservationConflict, authenticateUser} = require('../../utils/auth');
 const router = express.Router();
 var Sequelize = require("sequelize");
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const {db} = require("../../firebase/firebaseAdmin");
 
 let schema;
 if (process.env.NODE_ENV === 'production') {
@@ -196,21 +197,141 @@ router.get('/:id', async (req, res) => {
   return res.status(404).json({ message: "Tool couldn't be found", statusCode: 404 })
 });
 
+// Create a Tool
+// router.post('/', authenticateUser, validateTool, async (req, res) => {
+//   const { user } = req; // The user object was added by the authenticateUser middleware
+//   console.log('Authenticated user:', user);
+//
+//   if (!user) {
+//     return res.status(401).json({ message: 'Unauthorized - user not found' });
+//   }
+//
+//   const { address, city, state, country, lat, lng, name, description, price } = req.body;
+//
+//   try {
+//     // Check if the user exists in Firestore (if needed)
+//     const userRef = db.collection('users').doc(user.uid);
+//     console.log('User document path:', userRef.path);
+//     const userDoc = await userRef.get();
+//
+//     if (!userDoc.exists) {
+//       console.error('User document does not exist:', userRef.path);
+//       return res.status(400).json({ message: 'User not found in the database' });
+//     }
+//
+//     // Create a new tool document in Firestore
+//     const toolRef = db.collection('tools').doc();
+//     console.log('Creating tool document at path:', toolRef.path);
+//     await toolRef.set({
+//       ownerId: user.uid,
+//       address,
+//       city,
+//       state,
+//       country,
+//       lat,
+//       lng,
+//       name,
+//       description,
+//       price,
+//       createdAt: admin.firestore.FieldValue.serverTimestamp(),
+//     });
+//
+//     // Respond with the newly created tool's ID
+//     return res.status(201).json({ message: 'Tool added successfully', toolId: toolRef.id });
+//   } catch (error) {
+//     console.error('Error creating tool:', error);
+//     return res.status(500).json({ message: 'Server Error', error: error.message });
+//   }
+// });
+
 //Create a Tool
-router.post('/', requireAuth, validateTool, async (req, res) => {
+// router.post('/', authenticateUser, validateTool, async (req, res) => {
+//  // console.log(Tool Req: ${req.body.address})
+//   const { user } = req;
+//   const { address, city, state, country, lat, lng, name, description, price } = req.body;
+//   const newTool = await Tool.create({ owner: user.uid, address, city, state, country, lat, lng, name, description, price })
+//   if (newTool) return res.status(201).json(newTool);
+// });
+
+// Create a Tool
+router.post('/', authenticateUser, validateTool, async (req, res) => {
   const { user } = req;
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
-  const newTool = await Tool.create({ ownerId: user.id, address, city, state, country, lat, lng, name, description, price })
-  if (newTool) return res.status(201).json(newTool);
+
+  try {
+    const newTool = await Tool.create({
+      owner: user.uid,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price
+    });
+
+    if (newTool) {
+      return res.status(201).json(newTool); // Return the newly created tool
+    } else {
+      return res.status(400).json({ message: 'Error creating tool' });
+    }
+  } catch (error) {
+    console.error('Error creating tool:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
+
+
+
+module.exports = router;
+
+
+
+
 //Add an Image to a Tool based on the Tool's id
+// router.post('/:id/images', requireAuth, authIsTool, async (req, res) => {
+//   const { url, preview } = req.body;
+//   const tool = await Tool.findByPk(req.params.id);
+//   const newToolImage = await ToolImage.create({ url, preview, toolId: tool.id })
+//   if (newToolImage) return res.status(200).json({ id: newToolImage.id, url: newToolImage.url, preview: newToolImage.preview });
+// });
+
+// Add an Image to a Tool based on the Tool's ID
 router.post('/:id/images', requireAuth, authIsTool, async (req, res) => {
   const { url, preview } = req.body;
-  const tool = await Tool.findByPk(req.params.id);
-  const newToolImage = await ToolImage.create({ url, preview, toolId: tool.id })
-  if (newToolImage) return res.status(200).json({ id: newToolImage.id, url: newToolImage.url, preview: newToolImage.preview });
+
+  try {
+    const tool = await Tool.findByPk(req.params.id);
+
+    if (!tool) {
+      return res.status(404).json({ message: 'Tool not found' });
+    }
+
+    // Create the new image entry
+    const newToolImage = await ToolImage.create({
+      url,
+      preview,
+      toolId: tool.id
+    });
+
+    if (newToolImage) {
+      return res.status(200).json({
+        id: newToolImage.id,
+        url: newToolImage.url,
+        preview: newToolImage.preview
+      });
+    } else {
+      return res.status(400).json({ message: 'Error adding image to tool' });
+    }
+  } catch (error) {
+    console.error('Error adding image to tool:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
+
 
 //Edit a Tool
 router.put('/:id', requireAuth, authIsTool, validateTool, async (req, res) => {

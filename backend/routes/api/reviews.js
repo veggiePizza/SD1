@@ -22,7 +22,7 @@ const validateReview = [
 ];
 
 //Get all Reviews of the Current User--?
-router.get('/current', requireAuth, async (req, res) => {
+router.get('/current', async (req, res) => {
   const { user } = req;
   const reviews = await Review.findAll({
     where: { userId: user.id },
