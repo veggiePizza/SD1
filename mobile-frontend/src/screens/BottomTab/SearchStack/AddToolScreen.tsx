@@ -42,7 +42,7 @@ const AddToolScreen = ({ navigation }: SearchProps) => {
             const idToken = await user.getIdToken(); // Get the Firebase ID Token for authorization
 
             // Send POST request to the backend
-            const response = await fetch('http://192.168.1.249:8000/api/tools', {
+            const response = await fetch('http://:8000/api/tools', {
                 method: 'POST',
                 body: JSON.stringify(toolDetails),
                 headers: {
