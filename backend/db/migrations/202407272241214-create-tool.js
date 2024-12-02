@@ -28,12 +28,6 @@ module.exports = {
       country: {
         type: Sequelize.STRING
       },
-      lat: {
-        type: Sequelize.DECIMAL
-      },
-      lng: {
-        type: Sequelize.DECIMAL
-      },
       name: {
         type: Sequelize.STRING
       },
@@ -43,9 +37,9 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER
       },
-      owner: {
+      ownerId: {
         type: Sequelize.INTEGER,
-        //references: { model: 'Users' },
+        references: { model: 'Users' },
         onDelete: 'CASCADE'
       },
       createdAt: {

@@ -32,7 +32,7 @@ router.get('/current', requireAuth, async (req, res) => {
         model: Tool,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
         include: [{ model: ToolImage, attributes: ['url'] }],
-        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'name', 'price'],
       },
       { model: ReviewImage, attributes: ['id', 'url'] },
     ],

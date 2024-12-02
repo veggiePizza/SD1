@@ -12,13 +12,10 @@ import './index.css';
 const ToolsManagement = () => {
   const dispatch = useDispatch();
   const tools = useSelector(state => state.tools.tools);
-  //const id = useSelector(state => state.session.user);
-
 
   useEffect(() => {
     dispatch(getUserTools());
   }, []);
-
 
   return (
     <div className='toolsManagement'>

@@ -11,20 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      //Tool.belongsTo(models.User, {foreignKey : 'owner', as: "Owner" });
+      Tool.belongsTo(models.User, {foreignKey : 'ownerId', as: "Owner" });
       Tool.hasMany(models.Review, {foreignKey : 'toolId'});
       Tool.hasMany(models.ToolImage, {foreignKey : 'toolId'});
       Tool.hasMany(models.Reservation, {foreignKey : 'toolId'});
     }
   }
   Tool.init({
-    owner: DataTypes.STRING,
+    ownerId: DataTypes.INTEGER,
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     country: DataTypes.STRING,
-    lat: DataTypes.DECIMAL,
-    lng: DataTypes.DECIMAL,
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     price: DataTypes.INTEGER

@@ -15,26 +15,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       uid: {
-        type: Sequelize.STRING(256),
+        type: Sequelize.STRING(64),
         allowNull: false,
         unique: true
-      },
-      email: {
-        type: Sequelize.STRING(256),
-        allowNull: false,
-        unique: true
-      },
-      firstName: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      lastName: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      photo: {
-        type: Sequelize.STRING,
-        allowNull: true,
       },
       createdAt: {
         allowNull: false,

@@ -3,22 +3,30 @@
 const express = require('express');
 const { setTokenCookie, restoreUser, requireAuth, authExistingUser } = require('../../utils/auth');
 const { admin, db } = require('../../config/firebase')
+const { User} = require('../../db/models');
 
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
   const { idToken } = req.body;
   const decodedToken = await admin.auth().verifyIdToken(idToken);
-  const user = (await db.collection('Users').doc(decodedToken.uid).get()).data();
-  setTokenCookie(res, user);
-  return res.json({ user });
+  const uid = decodedToken.uid;
+  const user = (await db.collection('Users').doc(uid).get()).data();
+
+  const dbUser = await User.findOne({
+    where: { uid }
+  });
+  
+  const id = dbUser.id;
+  setTokenCookie(res, {id, uid, ...user});
+  return res.json({uid, ...user});
 });
 
 
 router.delete('/', (_req, res) => {
-    res.clearCookie('token');
-    return res.json({ message: 'success' });
-  }
+  res.clearCookie('token');
+  return res.json({ message: 'success' });
+}
 );
 //test
 

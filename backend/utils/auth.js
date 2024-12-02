@@ -10,6 +10,8 @@ const setTokenCookie = (res, user) => {
   console.log("10")
   console.log(user);
   console.log("12")
+
+  
   const token = jwt.sign(
     { data: user },
     secret,

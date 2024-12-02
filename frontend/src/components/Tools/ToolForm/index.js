@@ -28,7 +28,7 @@ function ToolForm({ tool }) {
 
     const dispatch = useDispatch();
 
-
+/*
 
     useEffect(() => {
         const errors = {};
@@ -46,7 +46,7 @@ function ToolForm({ tool }) {
         setValidationErrors(errors);
     }, [address, city, state, country, lat, lng, name, description, price, mainImg])
 
-
+*/
     const onSubmit = e => {
         e.preventDefault();
         setPostErrors(validationErrors)

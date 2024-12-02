@@ -6,9 +6,8 @@ import { useDispatch } from 'react-redux';
 import { addImage } from '../../../store/images';
 import { getTools } from '../../../store/tools';
 import { readTool } from '../../../store/tools';
-//import CreateImage from '../../Images/CreateImage';
+import CreateImage from '../../Images/CreateImage'
 import { resetSingleTool } from '../../../store/tools';
-import "./index.css";
 
 function UpdateToolForm({ tool, toolImages }) {
     //const idx = useSelector(state => state.tools.tool);
@@ -18,8 +17,6 @@ function UpdateToolForm({ tool, toolImages }) {
     const [city, setCity] = useState(tool.city);
     const [state, setState] = useState(tool.state);
     const [country, setCountry] = useState(tool.country);
-    const [lat, setLat] = useState(tool.lat);
-    const [lng, setLng] = useState(tool.lng);
     const [name, setName] = useState(tool.name);
     const [description, setDescription] = useState(tool.description);
     const [price, setPrice] = useState(tool.price);
@@ -43,14 +40,12 @@ function UpdateToolForm({ tool, toolImages }) {
         if (!city.length) errors.push(' is required');
         if (!state.length) errors.push(' is required');
         if (!country.length) errors.push(' is required');
-        if (!lat.length) errors.push(' is required');
-        if (!lng.length) errors.push(' is required');
         if (!name.length) errors.push(' is required');
         if (!description.length) errors.push(' is required');
         if (!price.length) errors.push(' is required');
         if (!mainImg.length) errors.push(' is required');
         setValidationErrors(errors);
-    }, [address, city, state, country, lat, lng, name, description, price, mainImg])
+    }, [address, city, state, country, name, description, price, mainImg])
 
 
     const onSubmit = e => {
@@ -59,17 +54,18 @@ function UpdateToolForm({ tool, toolImages }) {
         setSuccessfullSubmit(false)
         //if (validationErrors.length) return alert(`Cannot Submit`);
 
-        const updatedTool = { address, city, state, country, lat, lng, name, description, price };
+        const updatedTool = { address, city, state, country, name, description, price };
         const updatedImages = [{ id: toolImages[0].id, url: mainImg },
         { id: toolImages[1].id, url: img2 },
         { id: toolImages[2].id, url: img3 },
         { id: toolImages[3].id, url: img4 },
         { id: toolImages[4].id, url: img5 }]
         dispatch(updateTool(idx, updatedTool, updatedImages))
+
         navigate(`/tools/${idx}`);
 
     }
-    return (/*
+    return (
         <div className='toolForm'>
             <h1>Update Your Tool</h1>
             <h2>Where's your place located?</h2>
@@ -110,24 +106,6 @@ function UpdateToolForm({ tool, toolImages }) {
                             type='text'
                             onChange={e => setState(e.target.value)}
                             value={state}
-                        />
-                    </div>
-                    <div className='lat'>
-                        <label>Latitude</label>
-                        <input
-                            placeholder="Latitude"
-                            type='text'
-                            onChange={e => setLat(e.target.value)}
-                            value={lat}
-                        />
-                    </div>
-                    <div className='lng'>
-                        <label >Longitude</label>
-                        <input
-                            placeholder="Longitude"
-                            type='text'
-                            onChange={e => setLng(e.target.value)}
-                            value={lng}
                         />
                     </div>
                 </div>
@@ -196,7 +174,7 @@ function UpdateToolForm({ tool, toolImages }) {
                 </div>
             </form>
         </div>
-     */<></>);
+    );
 
 }
 

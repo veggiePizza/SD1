@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import * as sessionActions from "../../store/session";
+import * as sessionActions from "../../store/firebase";
 import './SignupForm.css';
 
 function SignupFormModal() {
@@ -25,7 +25,7 @@ function SignupFormModal() {
           if (data && data.errors) setErrors(data.errors);
         });
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+    return setErrors(['Password mismatch!']);
   };
 
   return (

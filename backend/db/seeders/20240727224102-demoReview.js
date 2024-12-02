@@ -29,7 +29,7 @@ module.exports = {
     {
       review: "The owner was rude",
       stars: 2,
-      userId: 2,
+      userId: 1,
       toolId: 3,
       createdAt: new Date('2023-04-01'),
       updatedAt: new Date('2023-04-01'),
@@ -37,7 +37,7 @@ module.exports = {
     {
       review: "This was so good",
       stars: 5,
-      userId: 2,
+      userId: 1,
       toolId: 2,
       createdAt: new Date('2023-02-16'),
       updatedAt: new Date('2023-02-16')
@@ -45,7 +45,7 @@ module.exports = {
     {
       review: "Never again",
       stars: 4,
-      userId: 2,
+      userId: 1,
       toolId: 3,
       createdAt: new Date('2023-03-26'),
       updatedAt: new Date('2023-03-26')

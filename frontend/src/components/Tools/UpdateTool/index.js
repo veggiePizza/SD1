@@ -21,8 +21,6 @@ const UpdateTool = () => {
             city: currTool.city,
             state: currTool.state,
             country: currTool.country,
-            lat: currTool.lat,
-            lng: currTool.lng,
             name: currTool.name,
             description: currTool.description,
             price: currTool.price

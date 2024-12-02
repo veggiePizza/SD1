@@ -5,10 +5,9 @@ import { readTool } from '../../../store/tools';
 import { getReviews } from '../../../store/reviews';
 import OpenModalMenuItem from '../../Navigation/OpenModalMenuItem';
 import OpenModalButton from '../../OpenModalButton';
-import LoginFormModal from '../../Session/loginPopUp';
+import LoginFormModal from '../../LoginFormModal';
 import CreateReview from '../../Reviews/CreateReview'
 import DeleteReview from '../../Reviews/DeleteReview'
-import './index.css';
 
 const ToolPage = () => {
   const { id } = useParams();
@@ -40,13 +39,8 @@ const ToolPage = () => {
   }
 
 
-  if (sessionUser) {
-
-    if (tool && sessionUser.id === tool.ownerId) {
-
-      allowPost = false;
-      console.log(allowPost);
-    }
+  if (sessionUser && tool) {
+    if (sessionUser.id === tool.ownerId) allowPost = false;
     else allowPost = true;
 
 
@@ -94,7 +88,7 @@ const ToolPage = () => {
 
             <div className='reserve'>
               <div className="description">
-                {tool.Owner && (<><h2>{`Rented by ${tool.Owner.firstName} ${tool.Owner.lastName}`}</h2></>)}
+                {tool.Owner && (<><h2>{`Hosted by ${tool.Owner.firstName} ${tool.Owner.lastName}`}</h2></>)}
                 <h4>{`${tool.description}`}</h4>
               </div>
 
@@ -103,7 +97,7 @@ const ToolPage = () => {
 
                 <div className='descriptionBox'>
 
-                  <h4>{`$${tool.price} day`}</h4>
+                  <h4>{`$${tool.price} night`}</h4>
 
                   <div className="ratingSummary">
                     {tool.avgStarRating ? (
@@ -124,7 +118,7 @@ const ToolPage = () => {
                 </div>
                 <div className="reserveButton">
                   <OpenModalButton
-                    buttonText="Click to Rent"
+                    buttonText="Reserve"
                     modalComponent={<h2>Feature Coming Soon...</h2>}
                   /></div>
 
@@ -169,7 +163,7 @@ const ToolPage = () => {
                 <ol className='allReviews'>
 
 
-                  {reviews && Object.values(reviews).map(({ User, id, review, updatedAt, userId }) => (
+                  {reviews && Object.values(reviews).map(({ User, id, review, updatedAt }) => (
                     <div>
                       <h4 className="date">{User.firstName}</h4>
                       <h5 className="date">{parseDate(updatedAt)}</h5>

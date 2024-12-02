@@ -5,51 +5,40 @@ const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
-      const { id, uid, email, firstName, lastName, photo } = this; // context will be the User instance
-      return { id, uid, email, firstName, lastName, photo };
+      const { id, uid} = this; // context will be the User instance
+      return {  id, uid };
     }
 
-    //not needed
-    validatePassword(password) {
-      return bcrypt.compareSync(password, this.hashedPassword.toString());
+    static getCurrentUserById(id) {
+      return User.scope("currentUser").findByPk(id);
     }
 
-    //in case we wanted to do a scope, not needed
-    static getCurrentUserByUid(uid) {
-      return User.scope("currentUser").findByPk(uid);
-    }
-
-    //also not needed or needs firebase implementataion
-    static async login({ credential, password }) {
+    static async login({ uid }) {
       const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
-            username: credential,
-            email: credential
+            uid
           }
         }
       });
-      if (user && user.validatePassword(password)) {
+      if (user) {
         return await User.scope('currentUser').findByPk(user.id);
       }
     }
 
-    //not needed
-    static async signup({ firstName, lastName, email, password }) {
-      const hashedPassword = bcrypt.hashSync(password);
+    static async signup({ uid }) {
       const user = await User.create({
-        firstName,
-        lastName,
-        username,
-        email,
-        hashedPassword
+        uid
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
 
     static associate(models) {
       // define association here
+      User.hasMany(models.Tool, {foreignKey : 'ownerId'});
+      User.hasMany(models.Review, {foreignKey : 'userId'});
+      User.hasMany(models.Reservation, {foreignKey : 'userId'});
     }
   };
 
@@ -57,60 +46,11 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init(
     {
-      uid: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      firstName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      lastName: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      photo: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        /* validate: {
-           len: [4, 30],
-           isNotEmail(value) {
-             if (Validator.isEmail(value)) {
-               throw new Error("Cannot be an email.");
-             }
-           }
-         },*/
-        unique: true
-      }
+      uid: DataTypes.STRING(64)
     },
     {
       sequelize,
       modelName: "User",
-      indexes: [
-        {
-          unique: true,
-          fields: ['email', 'firstName'],
-        }
-      ],
-      defaultScope: {
-        attributes: {
-          exclude: ["createdAt", "updatedAt"]
-        }
-      },
-      scopes: {
-        currentUser: {
-          attributes: { exclude: [] }
-        },
-        loginUser: {
-          attributes: {}
-        }
-      }
     }
   );
   return User;
