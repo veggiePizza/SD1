@@ -22,7 +22,7 @@ const SearchScreen: React.FC<SearchProps> = ({ navigation }) => {
         const fetchTools = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://192.168.1.249:8000/api/tools/');
+                const response = await fetch('http://:8000/api/tools/');
                 const data = await response.json();
                 setTools(data.Tools); // Set the tools from the API response
                 setLoading(false);
