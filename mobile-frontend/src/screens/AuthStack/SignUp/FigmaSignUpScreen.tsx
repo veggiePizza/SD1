@@ -2,10 +2,11 @@ import * as React from "react";
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
 import { AuthScreenNavigationType } from "../../../navigation/types";
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import {createUserWithEmailAndPassword, getAuth, updateProfile} from 'firebase/auth';
 import { useForm, Controller } from 'react-hook-form';
 import { authInstance } from "../../../services/firebase"
 import { Animated, Image, StyleSheet, Text, View, TouchableOpacity, Pressable, TextInput, Easing} from "react-native";
+
 
 // import "@fontsource/quicksand"; // Defaults to weight 400
 // import "@fontsource/quicksand/400.css"; // Specify weight
@@ -18,6 +19,8 @@ interface IUser {
     password: string;
     confirmPassword: string;
 }
+
+
 
 // Define the SignupScreen component
 const FigmaSignUpScreen = () => {
@@ -46,26 +49,79 @@ const FigmaSignUpScreen = () => {
         },
     });
 
-    // Define the function to handle form submission
-    const onSubmit = async (data: IUser) => {
-        try {
-            const { email, name, password, confirmPassword } = data;
+	const validateEmail = (email: string): boolean => {
+		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return re.test(String(email).toLowerCase());
+	}
 
-            // Check if the password and confirm password fields match
-            if (password !== confirmPassword) {
-                Alert.alert("Passwords do not match", "Please make sure both passwords are the same.");
-                return;
-            }
+	const onSubmit = async (data: IUser): Promise<void> => {
+		try {
+			const { email, name, password, confirmPassword } = data;
 
-            // Register the user with email and password using Firebase
-            await signUpWithEmailAndPassword(email, password, name);
-        } catch (error) {
-            // Handle any errors that occur during submission
-            Alert.alert("Submission Failed", "Please check your input and try again.");
-        }
-    }
+			if (password !== confirmPassword) {
+				Alert.alert("Passwords do not match", "Please make sure both passwords are the same.");
+				return;
+			}
 
-    // Function to handle user registration and profile update
+			if (!validateEmail(email)) {
+				Alert.alert("Invalid Email", "Please enter a valid email address.");
+				return;
+			}
+
+			const names = name.split(' ');
+			const firstName = names[0];
+			const lastName = names.slice(1).join(' ') || 'Unknown'; // Provide a fallback for lastName
+
+			console.log('Names:', { firstName, lastName });
+
+			const auth = getAuth();
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+			const firebaseUID = userCredential.user.uid;
+
+			const userData = {
+				firstName,
+				lastName,
+				email,
+				username: email.split('@')[0],
+				password,
+				firebaseUID
+			};
+
+			console.log('User data before sending to backend:', userData);
+
+			const response = await fetch(`IPADDRESS:8000/api/users/`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(userData),
+			});
+
+			if (!response.ok) {
+				const errorResponse = await response.text();
+				console.error('Error response from server:', errorResponse);
+				throw new Error(`Failed to sign up user: ${response.status} ${response.statusText}`);
+			}
+
+			const responseData = await response.json();
+			console.log('User signed up successfully:', responseData);
+
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Error signing up user:', error.message);
+				Alert.alert("Submission Failed", error.message);
+			} else {
+				console.error('Unknown error occurred', error);
+				Alert.alert("Submission Failed", "Please check your input and try again.");
+			}
+		}
+	};
+
+
+
+
+
+	// Function to handle user registration and profile update
     const signUpWithEmailAndPassword = async (email: string, password: string, name: string) => {
         try {
             // Create a new user with the provided email and password using Firebase
@@ -85,7 +141,7 @@ const FigmaSignUpScreen = () => {
             Alert.alert("Registration Error", "There was an issue creating your account. Please try again.");
         }
     }
-  	
+
   	return (
     		<View style={styles.lenditSignUpIphone}>
       			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../../assets/Background.png")}/>

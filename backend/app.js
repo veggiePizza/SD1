@@ -10,6 +10,8 @@ const stripeRoutes = require('./routes/Stripe/stripe');  // Import Stripe routes
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 
+console.log("Database file path:", process.env.DB_FILE);
+
 const app = express();
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -27,8 +29,7 @@ app.use(
     })
 );
 
-
-// Re-enable CSRF middleware
+// Re-enable CSRF middleware (commented portion retained as per request)
 // app.use(
 //     csurf({
 //         cookie: {
@@ -40,7 +41,7 @@ app.use(
 // );
 
 // Use the Stripe routes (this would be the route to handle payment-related operations)
- app.use('/stripe', stripeRoutes);  // Add '/stripe' prefix to all Stripe routes
+app.use('/stripe', stripeRoutes);  // Add '/stripe' prefix to all Stripe routes
 
 const routes = require('./routes');
 app.use(routes);

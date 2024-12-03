@@ -26,14 +26,14 @@ export type RootBottomTabParamList = {
 };
 
 // Search
+// Updated route type in SearchStackParamList
 export type SearchStackParamList = {
     Search: undefined;
     SearchResult: { query: string };
-    ToolDetails: { tool: { name: string, description: string, price: number, address: string, city: string, state: string, country: string, lat: number, lng: number } };
-    MapView: undefined; // Optional map view for tools
+    ToolDetails: { tool: { id: string; name: string; description: string; price: number; address: string; city: string; state: string; country: string; } };
+    MapView: undefined;
     AddTool: undefined;
 };
-
 
 // Wishlist
 export type WishListStackParamList = {
@@ -45,8 +45,9 @@ export type WishListStackParamList = {
 export type BookingsStackParamList = {
     CurrentBookings: undefined;
     PastBookings: undefined;
-    BookingDetails: { bookingId: string };
+    BookingDetails: { reservationId: number };  // Changed to 'reservationId' and type is 'number'
 };
+
 
 // Messages
 // Messages Stack Parameters
@@ -63,7 +64,10 @@ export type ProfileStackParamList = {
     PaymentMethods: undefined;
     AccountSettings: undefined;
     Reviews: undefined;
+    MyTools: undefined;
+    EditTools: { toolId: string }; // Define the parameter for EditTools
 };
+
 
 export type AppStackParamList = {
     Root: NavigatorScreenParams<RootBottomTabParamList>;

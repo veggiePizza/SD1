@@ -6,6 +6,9 @@ import { ProfileStackParamList } from "../../../navigation/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebase from "firebase/compat";
 import {authInstance} from "../../../services/firebase";
+import Config from "react-native-config";
+
+const apiBaseUrl = Config.REACT_APP_API_BASE_URL;
 
 // Type definition for the props
 type ProfileOverviewProp = NativeStackScreenProps<ProfileStackParamList, "ProfileOverview">;
@@ -48,7 +51,10 @@ const ProfileOverViewScreen: React.FC<ProfileOverviewProp> = ({ navigation }) =>
                 title="Account Settings"
                 onPress={() => navigation.navigate("AccountSettings")}
             />
-            <Button title="Reviews" onPress={() => navigation.navigate("Reviews")} />
+            <Button title="Reviews"
+                    onPress={() => navigation.navigate("Reviews")} />
+            <Button title="MyTools"
+                    onPress={() => navigation.navigate("MyTools")} />
         </View>
     );
 };

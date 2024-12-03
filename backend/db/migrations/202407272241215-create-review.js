@@ -15,21 +15,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.STRING,  // Firebase UID as the userId
+        references: { model: 'Users', key: 'id' },
+        onDelete: 'CASCADE'
+      },
+      toolId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'Tools', key: 'id' },
+        onDelete: 'CASCADE'
+      },
       review: {
         type: Sequelize.STRING
       },
       stars: {
         type: Sequelize.INTEGER
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Users' },
-        onDelete: 'CASCADE'
-      },
-      toolId: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Tools' },
-        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +43,7 @@ module.exports = {
       }
     }, options);
   },
+
   async down(queryInterface, Sequelize) {
     options.tableName = "Reviews";
     return queryInterface.dropTable(options);

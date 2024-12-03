@@ -1,8 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Config from "react-native-config";
 
+const apiBaseUrl = Config.REACT_APP_API_BASE_URL;
 export const fetchCsrfToken = async (): Promise<void> => {
     try {
-        const response = await fetch('http://192.168.1.249::8000/api/csrf/restore', {
+        const response = await fetch(`IPADDRESS:8000/api/csrf/restore`, {
             credentials: 'include', // Ensure cookies are included in the request
         });
         const data = await response.json();

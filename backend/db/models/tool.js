@@ -2,33 +2,39 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Tool extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
-      Tool.belongsTo(models.User, {foreignKey : 'ownerId', as: "Owner" });
-      Tool.hasMany(models.Review, {foreignKey : 'toolId'});
-      Tool.hasMany(models.ToolImage, {foreignKey : 'toolId'});
-      Tool.hasMany(models.Reservation, {foreignKey : 'toolId'});
+      Tool.belongsTo(models.User, {foreignKey: 'ownerId', as: 'Owner'});
+      Tool.hasMany(models.Review, {foreignKey: 'toolId'});
+      Tool.hasMany(models.ToolImage, {foreignKey: 'toolId'});
+      Tool.hasMany(models.Reservation, {foreignKey: 'toolId'});
     }
   }
   Tool.init({
-    ownerId: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,  // The primary key (auto-increment)
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
     address: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     country: DataTypes.STRING,
-    lat: DataTypes.DECIMAL,
-    lng: DataTypes.DECIMAL,
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.INTEGER
-    
+    price: DataTypes.INTEGER,
+    ownerId: {
+      type: DataTypes.STRING,  // This should be a string to match Firebase UID
+      allowNull: false,
+      references: {
+        model: 'Users', // Reference to the User table
+        key: 'id'       // Firebase UID as the primary key
+      },
+      onDelete: 'CASCADE'
+    }
   }, {
     sequelize,
     modelName: 'Tool',
