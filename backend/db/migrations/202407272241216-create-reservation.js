@@ -15,14 +15,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      toolId: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Tools' },
+      userId: {
+        type: Sequelize.STRING,  // Firebase UID as the userId
+        references: { model: 'Users', key: 'id' },
         onDelete: 'CASCADE'
       },
-      userId: {
+      toolId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Users' },
+        references: { model: 'Tools', key: 'id' },
         onDelete: 'CASCADE'
       },
       startDate: {
@@ -43,6 +43,7 @@ module.exports = {
       }
     }, options);
   },
+
   async down(queryInterface, Sequelize) {
     options.tableName = "Reservations";
     return queryInterface.dropTable(options);

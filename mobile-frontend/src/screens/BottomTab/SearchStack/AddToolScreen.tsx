@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { ScrollView, View, TextInput, Button, StyleSheet, Text, Alert, Image, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SearchStackParamList } from '../../../navigation/types';
-import { getAuth } from 'firebase/auth'; 
+import { getAuth } from 'firebase/auth';  // Import Firebase Authentication
+import Config from 'react-native-config';
 import { Color, Border, FontFamily, FontSize } from "./GlobalStylesAddTool";
+
+const apiBaseUrl = Config.REACT_APP_API_BASE_URL;
 
 type SearchProps = NativeStackScreenProps<SearchStackParamList, 'AddTool'>;
 
@@ -16,8 +19,6 @@ const AddToolScreen = ({ navigation }: SearchProps) => {
         city: '',
         state: '',
         country: '',
-        lat: '',
-        lng: '',
     });
 
     const handleInputChange = (field: keyof typeof toolDetails, value: string) => {
@@ -25,7 +26,8 @@ const AddToolScreen = ({ navigation }: SearchProps) => {
     };
 
     const handleSubmit = async () => {
-        if (!toolDetails.name || !toolDetails.price || !toolDetails.description) {
+        // Ensure that required fields are filled out
+        if (!toolDetails.name || !toolDetails.description || !toolDetails.price || !toolDetails.address || !toolDetails.city || !toolDetails.state || !toolDetails.country) {
             Alert.alert('Error', 'Please fill in all required fields');
             return;
         }
@@ -37,13 +39,23 @@ const AddToolScreen = ({ navigation }: SearchProps) => {
                 return;
             }
 
-            const idToken = await user.getIdToken();
+            const idToken = await user.getIdToken(); // Get the Firebase ID Token for authorization
+
+            // Send POST request to the backend
             const response = await fetch('http://:8000/api/tools', {
                 method: 'POST',
-                body: JSON.stringify(toolDetails),
+                body: JSON.stringify({
+                    name: toolDetails.name,
+                    description: toolDetails.description,
+                    price: toolDetails.price,
+                    address: toolDetails.address,
+                    city: toolDetails.city,
+                    state: toolDetails.state,
+                    country: toolDetails.country,
+                }),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`,
+                    'Authorization': `Bearer ${idToken}`,  // Attach the Bearer token
                 },
             });
 
@@ -62,73 +74,52 @@ const AddToolScreen = ({ navigation }: SearchProps) => {
     };
 
     return (
-        <ScrollView 
-    contentContainerStyle={styles.container}
-    keyboardShouldPersistTaps="handled"
->
-    <Image 
-        style={styles.backgroundIcon} 
-        resizeMode="cover" 
-        source={require("../../../../assets/Background.png")} 
-    />
-    <Text style={styles.whatWillYou}>What will you be lending?</Text>
-
-    <View style={styles.formContainer}>
-        <TextInput
-            style={styles.input}
-            placeholder="Tool Name"
-            value={toolDetails.name}
-            onChangeText={(text) => handleInputChange('name', text)}
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="Price"
-            keyboardType="numeric"
-            value={toolDetails.price}
-            onChangeText={(text) => handleInputChange('price', text)}
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="Address"
-            value={toolDetails.address}
-            onChangeText={(text) => handleInputChange('address', text)}
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="City"
-            value={toolDetails.city}
-            onChangeText={(text) => handleInputChange('city', text)}
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="State"
-            value={toolDetails.state}
-            onChangeText={(text) => handleInputChange('state', text)}
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="Country"
-            value={toolDetails.country}
-            onChangeText={(text) => handleInputChange('country', text)}
-        />
-        <TextInput
-            style={styles.descriptionInput}
-            placeholder="Description"
-            value={toolDetails.description}
-            multiline
-            onChangeText={(text) => handleInputChange('description', text)}
-        />
-    </View>
-
-    <TouchableOpacity 
-        style={[styles.submitButton]} 
-        activeOpacity={0.8} 
-        onPress={handleSubmit}
-    >
-        <Text style={styles.submitText}>Lend It!</Text>
-    </TouchableOpacity>
-</ScrollView>
-
+        <View style={styles.container}>
+            <TextInput
+                style={styles.input}
+                placeholder="Tool Name"
+                value={toolDetails.name}
+                onChangeText={(text) => handleInputChange('name', text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Description"
+                value={toolDetails.description}
+                onChangeText={(text) => handleInputChange('description', text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Price"
+                keyboardType="numeric"
+                value={toolDetails.price}
+                onChangeText={(text) => handleInputChange('price', text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Address"
+                value={toolDetails.address}
+                onChangeText={(text) => handleInputChange('address', text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="City"
+                value={toolDetails.city}
+                onChangeText={(text) => handleInputChange('city', text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="State"
+                value={toolDetails.state}
+                onChangeText={(text) => handleInputChange('state', text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Country"
+                value={toolDetails.country}
+                onChangeText={(text) => handleInputChange('country', text)}
+            />
+            <Button title="Add Tool" onPress={handleSubmit} />
+        </View>
     );
 };
 

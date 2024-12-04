@@ -2,6 +2,9 @@ import * as React from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { useStripe } from '@stripe/stripe-react-native';
 import { authInstance } from '../../../services/firebase';
+import Config from "react-native-config";
+
+const apiBaseUrl = Config.REACT_APP_API_BASE_URL;
 
 const PaymentMethodsScreen: React.FC = () => {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -12,7 +15,7 @@ const PaymentMethodsScreen: React.FC = () => {
 
         try {
             // Call your backend to create a Stripe customer and setup intent
-            const response = await fetch('http://192.168.1.249:8000/stripe/create-stripe-customer', {
+            const response = await fetch(`${apiBaseUrl}:8000/stripe/create-stripe-customer`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity , Button} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProfileStackParamList } from "../../../navigation/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebase from "firebase/compat";
-import { authInstance } from "../../../services/firebase";
+import Config from "react-native-config";
+import {authInstance} from "../../../services/firebase";
 import { Color, FontFamily, FontSize, Border } from "./GlobalStylesProfileOverview";
+
+
+const apiBaseUrl = Config.REACT_APP_API_BASE_URL;
 
 // Type definition for the props
 type ProfileOverviewProp = NativeStackScreenProps<ProfileStackParamList, "ProfileOverview">;
@@ -126,6 +130,20 @@ const ProfileOverViewScreen: React.FC<ProfileOverviewProp> = ({ navigation }) =>
                 <Image style={styles.lenddittIcon} resizeMode="cover" source={require("../../../../assets/NewLenditLogo.png")} />
 
             </View>
+
+            <Button
+                title="Edit Personal Information"
+                onPress={() => navigation.navigate("PersonalInformation")}
+            />
+            <Button
+                title="Manage Payment Methods"
+                onPress={() => navigation.navigate("PaymentMethods")}
+            />
+            <Button
+                title="Account Settings"
+                onPress={() => navigation.navigate("AccountSettings")}
+            />
+            <Button title="Reviews" onPress={() => navigation.navigate("Reviews")} />
         </View>
     );
 };

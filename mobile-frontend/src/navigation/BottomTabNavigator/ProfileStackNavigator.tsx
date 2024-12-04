@@ -12,7 +12,9 @@ import PaymentMethodsScreen from "../../screens/BottomTab/ProfileStack/PaymentMe
 import PersonalInformationScreen from "../../screens/BottomTab/ProfileStack/PersonalInformationScreen";
 import ReviewsScreen from "../../screens/BottomTab/ProfileStack/ReviewsScreen";
 import ProfileOverViewScreen from "../../screens/BottomTab/ProfileStack/ProfileOverviewScreen";
+import MyToolsScreen from "../../screens/BottomTab/ProfileStack/MyToolsScreen"
 import firebase from "firebase/compat";
+import EditToolScreen from "../../screens/BottomTab/ProfileStack/EditToolScreen";
 
 // Create a native stack navigator with type safety using the HomeStackParamList type
 const Stack = createNativeStackNavigator<ProfileStackParamList>()
@@ -60,6 +62,22 @@ const ProfileStackNavigator = () => {
             <Stack.Screen
                 name="Reviews"
                 component={ReviewsScreen}
+                options={{
+                    // Disable the header for this screen
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="MyTools"
+                component={MyToolsScreen}
+                options={{
+                    // Disable the header for this screen
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="EditTools"
+                component={EditToolScreen}
                 options={{
                     // Disable the header for this screen
                     headerShown: false,

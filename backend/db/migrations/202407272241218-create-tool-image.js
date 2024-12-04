@@ -23,7 +23,7 @@ module.exports = {
       },
       toolId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Tools' },
+        references: { model: 'Tools', key: 'id' },
         onDelete: 'CASCADE'
       },
       createdAt: {
@@ -38,6 +38,7 @@ module.exports = {
       }
     }, options);
   },
+
   async down(queryInterface, Sequelize) {
     options.tableName = "ToolImages";
     return queryInterface.dropTable(options);

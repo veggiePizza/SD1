@@ -1,67 +1,117 @@
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Button, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SearchStackParamList } from "../../../navigation/types";
-
-import * as React from "react";
 import { Color, FontFamily, FontSize, Border } from "./GlobalStylesSinglePost";
 import { useNavigation } from '@react-navigation/native';
+import { getAuth } from 'firebase/auth';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import config from 'react-native-config';
 
-
+const apiBaseUrl = config.REACT_APP_API_BASE_URL;
 
 type ToolDetailsProp = NativeStackScreenProps<SearchStackParamList, 'ToolDetails'>;
 
 const ToolDetailsScreen: React.FC<ToolDetailsProp> = ({ route }) => {
-    // Extracting tool details from the route params
     const { tool } = route.params;
 
-    const handleBookItemPress = () => {
-        // Handle Book Item press
-        console.log("Book Item pressed");
-    };
-
-    const handleMessageLenderPress = () => {
-        // Handle Message Lender press
-        console.log("Message Lender pressed");
-    };
-    
-
-
-    
+     // State for date pickers
+     const [startDate, setStartDate] = useState(new Date());
+     const [endDate, setEndDate] = useState(new Date());
+ 
+     // State for the tool owner
+     const [owner, setOwner] = useState<{ firstName: string; lastName: string } | null>(null);
+ 
+     // State to control visibility of the date picker
+     const [showStartDate, setShowStartDate] = useState(false);
+     const [showEndDate, setShowEndDate] = useState(false);
+ 
+     // Fetch the tool owner data
+     useEffect(() => {
+         const fetchToolDetails = async () => {
+             try {
+                 const response = await fetch(`IPADDRESS:8000/api/tools/${tool.id}`);
+                 const data = await response.json();
+ 
+                 if (data.Owner) {
+                     setOwner(data.Owner);
+                 }
+             } catch (error) {
+                 console.error('Error fetching tool details:', error);
+                 Alert.alert('Error', 'Failed to fetch tool details');
+             }
+         };
+ 
+         fetchToolDetails();
+     }, [tool.id]);
+ 
+     const onStartDateChange = (event: any, selectedDate: Date | undefined) => {
+         setShowStartDate(false);
+         if (selectedDate) {
+             setStartDate(selectedDate);
+         }
+     };
+ 
+     const onEndDateChange = (event: any, selectedDate: Date | undefined) => {
+         setShowEndDate(false);
+         if (selectedDate) {
+             setEndDate(selectedDate);
+         }
+     };
+ 
+     const handleBookTool = async () => {
+         const user = getAuth().currentUser;
+         if (!user) {
+             Alert.alert('Error', 'User not authenticated');
+             return;
+         }
+ 
+         const idToken = await user.getIdToken();
+ 
+         try {
+             const response = await fetch(`IPADDRESS:8000/api/reservations`, {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json',
+                     'Authorization': `Bearer ${idToken}`,
+                 },
+                 body: JSON.stringify({
+                     toolId: tool.id, // Assuming tool has an 'id' field
+                     startDate: startDate.toISOString(),
+                     endDate: endDate.toISOString(),
+                 }),
+             });
+ 
+             if (!response.ok) {
+                 throw new Error('Failed to book tool');
+             }
+ 
+             Alert.alert('Success', 'Tool booked successfully');
+         } catch (error: unknown) {
+             if (error instanceof Error) {
+                 Alert.alert('Error', error.message);
+             } else {
+                 Alert.alert('Error', 'An unknown error occurred');
+             }
+         }
+     };
 
     return (
-        <View style={styles.lenditProfilePage}>
-      			<Image style={styles.backgroundIcon} resizeMode="cover" source={require("../../../../assets/Background.png")} />
+        <ScrollView style={styles.container}>
+            <Text style={styles.title}>{tool.name}</Text>
+            <Text style={styles.subtitle}>Description</Text>
+            <Text style={styles.text}>{tool.description}</Text>
 
-                 
-      			<Text style={[styles.itemTitle, styles.priceFlexBox]}>{tool.name}</Text>
-      			<Text style={[styles.price, styles.priceTypo]}>${tool.price}</Text>
-        		<Text style={[styles.cityState, styles.cityStateTypo]}>{tool.city}, {tool.state}</Text>
+            <Text style={styles.subtitle}>Price</Text>
+            <Text style={styles.text}>${tool.price}</Text>
 
-        		<Text style={[styles.description, styles.cityStateTypo]}>Description</Text>
-                <View style={styles.container}>
-                    <ScrollView style={styles.scrollView}>
-        		        <Text style={styles.thisIsTemporary}>{tool.description}</Text>
-                    </ScrollView>
-                </View>
-                
+            <Text style={styles.subtitle}>Location</Text>
+            <Text style={styles.text}>{tool.address}</Text>
+            <Text style={styles.text}>{tool.city}, {tool.state}, {tool.country}</Text>
 
-
-
-                  
-                <Image style={styles.newlenditlogoProcessed1Icon} resizeMode="cover" source={require("../../../../assets/NewLenditLogo.png")} />
-
-      			<View style={[styles.imageplaceholder, styles.pricePosition]} />
-
-            
-      			<Image style={[styles.messagelendercontainerIcon, styles.iconLayout]} resizeMode="cover" source={require("../../../../assets/SmallContainer.png")} />
-      			<Text style={[styles.messageLender, styles.bookItemTypo]}>Message Lender?</Text>
-
-                
-        		<Image style={[styles.bookitemcontainerIcon, styles.iconLayout]} resizeMode="cover" source={require("../../../../assets/SmallContainer.png")} />
-        		<Text style={[styles.bookItem, styles.bookItemTypo]}>Book Item</Text>
-        				
-        </View>);
-
+            <Text style={styles.subtitle}>Coordinates</Text>
+        </ScrollView>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -153,115 +203,18 @@ const styles = StyleSheet.create({
   price: {
         top: 451,
         fontSize: 24,
-        height: 28,
-        left: 66,
-        position: "absolute",
-        textAlign: "left",
-        color: Color.colorDarkslategray
-  },
-  newlenditlogoProcessed1Icon: {
-        top: 735,
-        left: 124,
-        width: 173,
-        height: 153,
-        position: "absolute"
-  },
-  messagelendercontainerIcon: {
-        left: 14,
-        borderRadius: Border.br_11xl
-  },
-  imageplaceholder: {
-        top: 133,
-        backgroundColor: "#d9d9d9",
-        width: 300,
-        height: 274
-  },
-  messageLender: {
-        left: 37,
-        width: 162
-  },
-  bookitemcontainerIcon: {
-        left: 224,
-        borderRadius: Border.br_11xl
-  },
-  bookItem: {
-        left: 275,
-        width: 91
-  },
-  thisIsTemporary: {
-    color: Color.colorBlack,
-    fontFamily: FontFamily.quicksandMedium,
-    fontWeight: "500",
-    fontSize: FontSize.size_lg,
-    textAlign: "left",
-},
-  cityState: {
-        top: 479,
-        width: 170,
-        fontFamily: FontFamily.quicksandMedium,
-        fontWeight: "500"
-  },
-  description: {
-        top: 520,
-        width: 122,
-        fontFamily: FontFamily.quicksandBold,
-        fontWeight: "700"
-  },
-  backButtonChild: {
-        backgroundColor: Color.colorDarkslategray,
-        borderStyle: "solid",
-        borderColor: Color.colorDarkslategray,
-        borderWidth: 1,
-        borderRadius: Border.br_11xl,
-        left: 0,
-        top: 0
-  },
-  backButtonItem: {
-        top: 19,
-        left: 12,
-        maxHeight: "100%",
-        width: 23,
-        position: "absolute"
-  },
-  back: {
-        top: 5,
-        left: 39,
-        fontSize: 23,
-        width: 54,
-        height: 29,
-        color: Color.colorWhite,
-        fontWeight: "500",
-        textAlign: "left",
-        position: "absolute"
-  },
-  backButton: {
-        top: 70,
-        left: 30
-  },
-  lenditProfilePage: {
-        backgroundColor: Color.colorWhite,
-        flex: 1,
-        width: "100%",
-        overflow: "hidden",
-        height: 932
-  }
-    // container: {
-    //     padding: 20,
-    // },
-    // title: {
-    //     fontSize: 24,
-    //     fontWeight: 'bold',
-    //     marginBottom: 10,
-    // },
-    // subtitle: {
-    //     fontSize: 18,
-    //     fontWeight: '600',
-    //     marginTop: 20,
-    // },
-    // text: {
-    //     fontSize: 16,
-    //     marginVertical: 5,
-    // },
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    subtitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginTop: 20,
+    },
+    text: {
+        fontSize: 16,
+        marginVertical: 5,
+    },
 });
 
 export default ToolDetailsScreen;

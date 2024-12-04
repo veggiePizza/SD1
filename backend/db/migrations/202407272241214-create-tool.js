@@ -6,7 +6,6 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Tools', {
@@ -28,12 +27,6 @@ module.exports = {
       country: {
         type: Sequelize.STRING
       },
-      lat: {
-        type: Sequelize.DECIMAL
-      },
-      lng: {
-        type: Sequelize.DECIMAL
-      },
       name: {
         type: Sequelize.STRING
       },
@@ -44,8 +37,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       ownerId: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Users' },
+        type: Sequelize.STRING,  // Use STRING for the Firebase UID
+        references: { model: 'Users', key: 'id' },
         onDelete: 'CASCADE'
       },
       createdAt: {

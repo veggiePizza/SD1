@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput,Image, Button, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, TextInput,Image, Button, FlatList, TouchableOpacity,Alert, ActivityIndicator } from 'react-native';
 import { useStripe } from '@stripe/stripe-react-native';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { authInstance, db } from '../../../services/firebase';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SearchStackParamList } from '../../../navigation/types';
-import { Dimensions } from 'react-native';
-import { Color, Border, FontFamily, FontSize } from "./GlobalStylesSearchScreen";
+import { useFocusEffect } from '@react-navigation/native';
 const { width } = Dimensions.get('window'); // Get the screen width
 
 type SearchProps = NativeStackScreenProps<SearchStackParamList, 'Search'>;
@@ -14,18 +13,14 @@ type SearchProps = NativeStackScreenProps<SearchStackParamList, 'Search'>;
 const SearchScreen: React.FC<SearchProps> = ({ navigation }) => {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const [loading, setLoading] = useState(false);
-    const [tools, setTools] = useState<any[]>([]); // State to store tools
-    const [filters, setFilters] = useState({
-        minPrice: '',
-        maxPrice: '',
-    });
+    const [tools, setTools] = useState<any[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     // Fetch tools from the backend API
-    useEffect(() => {
         const fetchTools = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://192.168.1.129:8000/api/tools/');
+                const response = await fetch('http://:8000/api/tools/');
                 const data = await response.json();
                 setTools(data.Tools); // Set the tools from the API response
                 setLoading(false);
@@ -35,8 +30,17 @@ const SearchScreen: React.FC<SearchProps> = ({ navigation }) => {
             }
         };
 
+    // Fetch tools initially and whenever searchQuery changes
+    useEffect(() => {
         fetchTools();
-    }, []);
+    }, [searchQuery]);
+
+    // Re-fetch tools whenever the screen is focused
+    useFocusEffect(
+        useCallback(() => {
+            fetchTools();
+        }, [])
+    );
 
     const getIdToken = async () => {
         const currentUser = authInstance.currentUser;
@@ -108,27 +112,15 @@ const SearchScreen: React.FC<SearchProps> = ({ navigation }) => {
             <Text style={styles.title}>Search for Tools</Text>
       		<View style={[styles.tempNavBar, styles.tempNavBarPosition]} />
 
+<TextInput
+                style={styles.input}
+                placeholder="Search for a tool"
+                value={searchQuery}
+                onChangeText={(text) => setSearchQuery(text)}
+            />
 
-              <View style={styles.filterContainer}>
-                <View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Min Price"
-                    value={filters.minPrice}
-                    onChangeText={(text) => setFilters({ ...filters, minPrice: text })}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Max Price"
-                    value={filters.maxPrice}
-                    onChangeText={(text) => setFilters({ ...filters, maxPrice: text })}
-                />
-                </View>
-                <View style={[styles.searchbuttoncontainer, styles.searchLayout]}>
-                <Button title="Search" onPress={() => {}} />
-                </View>
-            </View>
-    
+            <Button title="Search" onPress={() => {}} />
+
             {loading ? (
                 <ActivityIndicator size="large" color="#0000ff" />
             ) : (
@@ -151,9 +143,10 @@ const SearchScreen: React.FC<SearchProps> = ({ navigation }) => {
                             <Button
                                 title="View Details"
                                 onPress={() => navigation.navigate('ToolDetails', { tool: item })}
-                            />
+
+                                    />
+                                    </View>
                         </View>
-                    </View>
                     )}
                     keyExtractor={(item) => item.id.toString()}
                 />
@@ -324,4 +317,4 @@ addpaymentcontainerIcon: {
     },
 });
 
-export default SearchScreen;
+export default SearchScreen}
