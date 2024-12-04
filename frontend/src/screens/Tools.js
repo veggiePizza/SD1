@@ -155,15 +155,29 @@ const LeftFilterSection = () => {
   );
 };
 
+const categories = [
+  "Hammer",
+  "Tool Box",
+  "ChainSaw",
+  "Screwdriver",
+  "WoodSaw",
+  "Sony Lens",
+  "Utility Cutter",
+  "Electric Drill"
+ 
+];
 
 const RightProductSection = () => (
   <RightContainer>
     <ProductHeading>SEARCH FOR ITEMS NEAR YOU</ProductHeading>
     <ProductGrid>
-      {Array.from({ length: 40 }, (_, index) => (
+      {Array.from({ length: 8 }, (_, index) => (
         <ProductBox key={index}>
-          <ProductImagePlaceholder />
-          <ProductNamePlaceholder />
+          <ProductImagePlaceholder src={require(`../assets/images/test${index}.png`)} /> 
+          <ProductNamePlaceholder>
+            {categories[index]} 
+          </ProductNamePlaceholder>
+         
         </ProductBox>
       ))}
     </ProductGrid>
@@ -278,8 +292,9 @@ const ProductBox = styled.div`
   padding: 10px;
 `;
 
-const ProductImagePlaceholder = styled.div`
+const ProductImagePlaceholder = styled.img`
   width: 100%;
+  /*background: url("/static/media/NewLenditLogo_1.0b1032c45a059417fbfb.png");*/
   height: 200px; /* Height for product image */
   background-color: #e8e8e8; /* Placeholder color */
   border-radius: 4px; /* Rounded corners */
