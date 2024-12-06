@@ -33,7 +33,7 @@
     margin-left: 25px;
     color: white;
     font-size: larger;
-    background-image: linear-gradient(to right, rgb(227, 35, 81) , rgb(224, 34, 97));
+    background-color: rgba(11,69,117,1);;
     box-shadow: 0 0 3px black;
     line-height: 45px;
 }

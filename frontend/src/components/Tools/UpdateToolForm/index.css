@@ -25,8 +25,8 @@
     margin-bottom: 3px;
 }
 .spotForm input, textarea{
-    color: white;
-    background-image:linear-gradient(to right, rgb(227, 35, 81) , rgb(224, 34, 97));
+    color: rgba(11,69,117,1);
+    background-image:rgba(11,69,117,1);
     font-size: smaller;
     border: 2px solid black;
     width: 100%;
@@ -41,10 +41,10 @@
     justify-content: center;
 }
 .submitUpdate > button{
-    background-image: linear-gradient(to right, rgb(227, 35, 81) , rgb(224, 34, 97));
+    background-image: rgba(11,69,117,1);
     border-radius: 6px;
     margin: 20px;
-    color: white;
+    color: rgba(11,69,117,1);
     font-size: small;
     padding: 5px;
   }

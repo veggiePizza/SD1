@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import styled, { css } from "styled-components";
 import FeatherIcon from "react-native-vector-icons/dist/Feather";
+import ProfileButton from './profileButton';
 
-function MaterialButtonTransparentHamburger(props) {
+function MaterialButtonTransparentHamburger(props, {user}) {
   return (
     <Container {...props}>
       <FeatherIcon
@@ -11,7 +12,9 @@ function MaterialButtonTransparentHamburger(props) {
           color: "rgba(0,0,0,1)",
           fontSize: 24
         }}
-      ></FeatherIcon>
+        
+      >
+      </FeatherIcon>
     </Container>
   );
 }

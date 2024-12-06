@@ -1,10 +1,12 @@
 const express = require('express');
+const { admin, db } = require('../../config/firebase')
 const { Tool, Review, Reservation, ToolImage, User, ReviewImage } = require('../../db/models');
 const { requireAuth, authIsTool, authIsToolNot, reservationConflict } = require('../../utils/auth');
 const router = express.Router();
 var Sequelize = require("sequelize");
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+
 
 let schema;
 if (process.env.NODE_ENV === 'production') {
@@ -24,15 +26,6 @@ const validateTool = [
   check('country')
     .notEmpty()
     .withMessage('Country is required'),
-  check('lat')
-    .isNumeric()
-    //.toString() 
-    //.isLatLong()
-    .withMessage('Latitude is not valid'),
-  check('lng')
-    //.isLatLong()
-    .isNumeric()
-    .withMessage('Longitude is not valid'),
   check('name')
     .isLength({ max: 49 })
     .withMessage('Name must be less than 50 characters'),
@@ -74,22 +67,6 @@ const validateQuery = [
     .optional()
     .isInt({ max: 20, min: 1 })
     .withMessage('Size must be greater than or equal to 1'),
-  check('maxLat')
-    .optional()
-    .isDecimal()
-    .withMessage('Maximum latitude is invalid'),
-  check('minLat')
-    .optional()
-    .isDecimal()
-    .withMessage('Minimum latitude is invalid'),
-  check('minLng')
-    .optional()
-    .isDecimal()
-    .withMessage('Maximum longitude is invalid'),
-  check('maxLng')
-    .optional()
-    .isDecimal()
-    .withMessage('Minimum longitude is invalid'),
   check('minPrice')
     .optional()
     .isDecimal({ min: 0 })
@@ -103,27 +80,16 @@ const validateQuery = [
 
 //Get all Tools
 router.get('/', validateQuery, async (req, res) => {
-  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+  let { page, size, minPrice, maxPrice } = req.query;
   page = parseInt(page);
   size = parseInt(size);
-  minLat = parseInt(minLat);
-  maxLat = parseInt(maxLat);
-  minLng = parseInt(minLng);
-  maxLng = parseInt(maxLng);
   minPrice = parseInt(minPrice);
   maxPrice = parseInt(maxPrice);
-
-
-
 
   if (Number.isNaN(page)) page = 1;
   if (Number.isNaN(size)) size = 20;
   const where = {};
 
-  if (minLat) where.lat = { [Op.gte]: minLat };
-  if (maxLat) where.lat = { [Op.lte]: maxLat };
-  if (minLng) where.lng = { [Op.gte]: minlng };
-  if (maxLng) where.lng = { [Op.lte]: maxLng };
   if (minPrice) where.price = { [Op.gte]: minPrice };
   if (maxPrice) where.price = { [Op.lte]: maxPrice };
 
@@ -164,6 +130,9 @@ router.get('/current', requireAuth, async (req, res) => {
     include: [{ model: Review, attributes: [] }, { model: ToolImage, attributes: [] }],
     group: "Tool.id",
   });
+
+
+  console.log(`/n/n/n$${tools}`)
   if (tools) return res.status(200).json(tools);
 });
 
@@ -172,8 +141,6 @@ router.get('/:id', async (req, res) => {
   const tool = await Tool.findByPk(req.params.id, {
     attributes: {
       include: [
-        //  [Sequelize.fn('COUNT', Sequelize.col('Reviews.review')), 'numReviews'],
-        //[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating'],
         [Sequelize.literal(
           `(SELECT COUNT(review) FROM ${schema ? `"${schema}"."Reviews"` : 'Reviews'
           } WHERE "Reviews"."toolId" = "Tool"."id")`
@@ -185,22 +152,31 @@ router.get('/:id', async (req, res) => {
       ]
     },
     include: [
-      { model: Review }, //, attributes: []
+      { model: Review },
       { model: ToolImage, attributes: ['id', 'url', 'preview'] },
-      { model: User, attributes: ['id', 'firstName', 'lastName'], as: "Owner" }
+      { model: User, attributes: ['uid'], as: "Owner" }
     ],
     order: [[{ model: ToolImage }, 'id', 'ASC'],
     [{ model: Review }, 'updatedAt', 'DESC']]
   });
-  if (tool) return res.status(200).json(tool);
+  if (tool && tool.Owner) {
+    const user = ((await db.collection('Users').doc(tool.Owner.uid).get()).data());
+
+    //console.log(`\n\n\n\nTHis is doct :" ${toolData.Owner.uid}`);
+    //console.log(`\n\n\n\nReady to finish: ${user.data()}`)
+    tool.Owner.firstName = "user.firstName";
+    tool.Owner.email = "user.email";
+    tool.Owner.photo = "user.photo";
+    return res.status(200).json(tool);
+  }
   return res.status(404).json({ message: "Tool couldn't be found", statusCode: 404 })
 });
 
 //Create a Tool
 router.post('/', requireAuth, validateTool, async (req, res) => {
   const { user } = req;
-  const { address, city, state, country, lat, lng, name, description, price } = req.body;
-  const newTool = await Tool.create({ ownerId: user.id, address, city, state, country, lat, lng, name, description, price })
+  const { address, city, state, country, name, description, price } = req.body;
+  const newTool = await Tool.create({ owner: user.id, address, city, state, country, name, description, price })
   if (newTool) return res.status(201).json(newTool);
 });
 
@@ -214,9 +190,9 @@ router.post('/:id/images', requireAuth, authIsTool, async (req, res) => {
 
 //Edit a Tool
 router.put('/:id', requireAuth, authIsTool, validateTool, async (req, res) => {
-  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { address, city, state, country, name, description, price } = req.body;
   await Tool.update(
-    { address, city, state, country, lat, lng, name, description, price },
+    { address, city, state, country, name, description, price },
     { where: { id: req.params.id } })
   const tool = await Tool.findByPk(req.params.id);
   if (tool) return res.status(200).json(tool);
@@ -240,7 +216,7 @@ router.get('/:id/reviews', async (req, res) => {
     const reviews = await Review.findAll({
       where: { toolId: req.params.id },
       include: [
-        { model: User, attributes: ['id', 'firstName', 'lastName'] },
+        { model: User, attributes: ['id', 'uid'] },
         { model: ReviewImage, attributes: ['id', 'url'] }
       ],
       order: [['updatedAt', 'DESC']]

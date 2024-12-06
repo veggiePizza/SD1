@@ -15,7 +15,7 @@
 
 .updateButton{
     display: flex;
-    background-image: linear-gradient(to right, rgb(227, 35, 81) , rgb(224, 34, 97));
+    background-color: rgba(11,69,117,1);
     border-radius: 4px;
     width: 60px;
     height: 20px;
@@ -39,7 +39,7 @@
   }
   .createNewButton{
     display: flex;
-    background-image: linear-gradient(to right, rgb(227, 35, 81) , rgb(224, 34, 97));
+    background-color: rgba(11,69,117,1);
     border-radius: 4px;
     width: 200px;
     height: 35px;

@@ -64,7 +64,7 @@ function ToolForm({ tool }) {
         <div className='toolForm'>
             <h1>Create A New Tool</h1>
             <h2>Where's your place located?</h2>
-            <h3>Guests will only get your exact address once they booked a reservation.</h3>
+            <h3></h3>
             <form onSubmit={onSubmit}>
                 <div className='toolLocation'>
                     <div className='country'>
@@ -107,30 +107,12 @@ function ToolForm({ tool }) {
                             value={state}
                         />
                     </div>
-                    <div className='lat'>
-                        <label>Latitude</label>
-                        {'latitude' in validationErrors && <label className='errorLabel'>{postErrors.latitude}</label>}
-                        <input
-                            placeholder="Latitude"
-                            type='text'
-                            onChange={e => setLat(e.target.value)}
-                            value={lat}
-                        />
-                    </div>
-                    <div className='lng'>
-                        <label >Longitude</label>
-                        {'longitude' in validationErrors && <label className='errorLabel'>{postErrors.longitude}</label>}
-                        <input
-                            placeholder="Longitude"
-                            type='text'
-                            onChange={e => setLng(e.target.value)}
-                            value={lng}
-                        />
-                    </div>
+              
+
                 </div>
                 <div className='toolDescription'>
-                    <h2>Describe your place to guests</h2>
-                    <h3>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</h3>
+                    <h2>Describe your tool</h2>
+                    <h3>Mention the best features of your tool</h3>
                     <textarea
                         placeholder="Description"
                         onChange={e => setDescription(e.target.value)}
@@ -141,7 +123,7 @@ function ToolForm({ tool }) {
                 </div>
                 <div className='toolTitle'>
                     <h2>Create a title for your tool</h2>
-                    <h3>Catch guests' attention with a tool title that highlights what makes your place special.</h3>
+                    <h3></h3>
                     <textarea
                         placeholder="Name of your tool"
                         onChange={e => setName(e.target.value)}
@@ -152,7 +134,6 @@ function ToolForm({ tool }) {
                 </div>
                 <div className='toolPrice'>
                     <h2>Set a base price for your tool</h2>
-                    <h3>Competitive pricing can help your listing stand out and rank higher in search results.</h3>
                     <div>
                         <h4>$</h4>
                         <textarea

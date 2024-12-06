@@ -94,7 +94,7 @@ const ToolPage = () => {
 
             <div className='reserve'>
               <div className="description">
-                {tool.Owner && (<><h2>{`Rented by ${tool.Owner.firstName} ${tool.Owner.lastName}`}</h2></>)}
+                {tool.Owner && (<><h2>{`Rented by Omar`}</h2></>)}
                 <h4>{`${tool.description}`}</h4>
               </div>
 

@@ -7,7 +7,7 @@ import './ReviewForm.css';
 
 function ReviewForm({ review, formType }) {
     const dispatch = useDispatch();
-    const spot = useSelector(state => state.spots.spot);
+    const tool = useSelector(state => state.tools.tool);
     const [reviewText, setReviewText] = useState("");
     const [stars, setStars] = useState(0);
 
@@ -34,7 +34,7 @@ function ReviewForm({ review, formType }) {
         setErrors([]);
 
         if (formType === "Create Review") {
-            return dispatch(createReview(spot.id, stars, reviewText))
+            return dispatch(createReview(tool.id, stars, reviewText))
                 .then(closeModal)
                 .catch(
                     async (res) => {
@@ -61,7 +61,7 @@ function ReviewForm({ review, formType }) {
 
     return (
         <div className="reviewForm">
-            <h1>How was your stay at {`${spot.name}`}?</h1>
+            <h1>How was your stay at {`${tool.name}`}?</h1>
             <form onSubmit={handleSubmit}>
                 <ul>
                     {Object.values(errors).map((error, idx) => (

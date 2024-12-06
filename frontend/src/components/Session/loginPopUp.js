@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
+import * as sessionActions from "../../store/firebase";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal"
 import SignInwithGoogle from "./signInWithGoogle"

@@ -5,6 +5,8 @@ import * as sessionActions from '../store/firebase';
 import OpenModalMenuItem from './Navigation/OpenModalMenuItem';
 import SignupFormModal from './SignupFormModal';
 import FirebaseLogin from './Session/loginPopUp'
+import FeatherIcon from "react-native-vector-icons/dist/Feather";
+import styled, { css } from "styled-components";
 
 function ProfileButton({ user }) {
   const navigate = useNavigate();
@@ -45,7 +47,19 @@ function ProfileButton({ user }) {
   return (
     <>
       <button className="userMenu" onClick={openMenu}>
-      <i class="fa-regular fa-square-caret-down"></i>
+
+        <Container>
+          <FeatherIcon
+            name="menu"
+            style={{
+              color: "rgba(0,0,0,1)",
+              fontSize: 24
+            }}
+
+          >
+          </FeatherIcon>
+        </Container>
+
       </button>
       <ul className={ulClassName} ref={ulRef}>
 
@@ -67,16 +81,21 @@ function ProfileButton({ user }) {
               </div>
             ) : (
               <div className="menuList">
-                <OpenModalMenuItem
-                  itemText="Log In"
+            
+                <NavLink
+                  to="/AuthPage" 
+                  onClick={closeMenu}
                   onItemClick={closeMenu}
-                  modalComponent={<FirebaseLogin />}
-                />
-                <OpenModalMenuItem
-                  itemText="Sign Up"
+                >
+                  Log In
+                </NavLink>
+                <NavLink
+                  to="/AuthPage" 
+                  onClick={closeMenu}
                   onItemClick={closeMenu}
-                  modalComponent={<SignupFormModal />}
-                />
+                >
+                  Sign up
+                </NavLink>
               </div>)}
           </>
         )}
@@ -84,5 +103,17 @@ function ProfileButton({ user }) {
     </>
   );
 }
+
+const Container = styled.div`
+  height: 41px;
+  width: 110px;
+  background-color: rgba(11,69,117,1);
+  margin-left: 60px;
+  margin-top: 36px;
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default ProfileButton;

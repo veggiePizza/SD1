@@ -1,8 +1,8 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../components/firebase"; // Import your Firebase configuration
-import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { csrfFetch } from './csrf';
 import Cookies from 'js-cookie';
 
@@ -62,28 +62,29 @@ export const googleLogin = () => async (dispatch) => {
 */
 
 export const signup = (user) => async (dispatch) => {
-  //const user = await createUserWithEmailAndPassword(auth, email, password);
   const { firstName, lastName, email, password } = user;
-  
-  console.log("71")
-  console.log(user)
-  console.log("73")
-  
-  const response = await csrfFetch("/api/users", {
-    method: "POST",
-    body: JSON.stringify({
+  const result = await createUserWithEmailAndPassword(auth, email, password);
+  const newUser = result.user;
+
+  if (newUser) {
+    await setDoc(doc(db, "Users", newUser.uid), {
+      email,
       firstName,
       lastName,
-      email,
-      password,
-    }),
-  });
+    });
 
-  console.log("XxXxxXXX")
+    const idToken = await newUser.getIdToken();
+    const response = await csrfFetch('/api/firebase', {
+      method: 'POST',
+      body: JSON.stringify({
+        idToken
+      })
+    });
 
-  const newUser = await response.json();
-  dispatch(setUser(newUser.user));
-  return newUser;
+    const data = await response.json();
+    dispatch(setUser(data.user));
+    return response;
+  }
 };
 
 export const logout = () => async (dispatch) => {
@@ -107,10 +108,22 @@ export const restoreUser = () => async dispatch => {
 export const googleLogin = () => async (dispatch) => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(auth, provider);
-  const user = result.user;
+  
+  if (result.user) {
+    const userDocRef = doc(db, "Users", result.user.uid);
+    const user = await getDoc(userDocRef);
 
-  if (user) {
-    const idToken = await user.getIdToken();
+    if (!user) {
+      await setDoc(doc(db, "Users", result.user.uid), {
+        email: user.email,
+        firstName: user.displayName,
+        photo: user.photoURL,
+        lastName: "",
+      });
+
+      user = await getDoc(userDocRef);
+    }
+    const idToken = await result.user.getIdToken();
     const response = await csrfFetch('/api/firebase', {
       method: 'POST',
       body: JSON.stringify({
@@ -119,9 +132,35 @@ export const googleLogin = () => async (dispatch) => {
     });
 
     const data = await response.json();
-    dispatch(setUser(data.user));
+    dispatch(setUser(data));
     return response;
   }
+}
+
+
+
+
+
+
+
+
+
+export const login = (user) => async (dispatch) => {
+  const { email, password } = user;
+
+  const result = await signInWithEmailAndPassword(auth, email, password)
+  const idToken = await result.user.getIdToken();
+
+  const response = await csrfFetch('/api/firebase', {
+    method: 'POST',
+    body: JSON.stringify({
+      idToken
+    })
+  });
+
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
 
 };
 

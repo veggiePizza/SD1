@@ -2,16 +2,19 @@
     font-family: 'Montserrat', sans-serif;
 }
 .nav {
-    margin-left: 20px;
-    margin-right: 2000px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    border-bottom: solid grey .5px;
-    width: 1400px;
-    height: 50px;
-}
+    padding: 10px 20px;
+    background-color: transparent; /* Set the background to transparent */
+    position: fixed; /* Ensures the navbar stays fixed on top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 75px; /* Adjust to a fixed height */
+  }
+  
 
 .nav>* {
     display: flex;
@@ -31,12 +34,17 @@
 
 .userMenu {
     display: flex;
+    height: 0px;
+    width: 0px;
+    margin-right: 50px;
     justify-content: center;
     align-items: center;
+    color:rgba(11,69,117,1);
+    background-color: rgba(11,69,117,1);
 
 }
 .seperator {
-    border-bottom: solid grey 1px;
+    border-bottom: solid grey 0px;
     padding-bottom: 2px;
 }
 
@@ -73,7 +81,7 @@ ul {
 }
 
 .manageTools, .logoutButton, .menuList > *{
-    background-image: linear-gradient(to right, rgb(4, 221, 174) , rgb(4, 96, 93));
+    background-color: rgba(11,69,117,1);
     border: 1px solid black;
     border-radius: 10px;
     margin-top: 1px;

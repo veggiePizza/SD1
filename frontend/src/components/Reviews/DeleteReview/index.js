@@ -12,7 +12,7 @@ function DeleteReview(id) {
 console.log(id)
 
     if (confirm === "delete") {
-        dispatch(deleteReview(id.id, id.spotId )).then(closeModal);
+        dispatch(deleteReview(id.id, id.toolId )).then(closeModal);
     }
     else if (confirm === "keep") {
         closeModal()

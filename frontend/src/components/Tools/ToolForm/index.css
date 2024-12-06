@@ -54,9 +54,9 @@ label {
 }
 
 .spotLocation ::placeholder {
-    color: white;
+    color: rgba(11,69,117,1);
     opacity: 1;
 }
 .errorLabel{
-    color: red;
+    color: rgba(11,69,117,1);
 }

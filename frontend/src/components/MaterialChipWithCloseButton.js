@@ -3,7 +3,7 @@ import styled from "styled-components";
 import MaterialButtonShare4 from "./MaterialButtonShare4";
 import MaterialButtonTransparentHamburger from "./MaterialButtonTransparentHamburger";
 
-function MaterialChipWithCloseButton(props) {
+function MaterialChipWithCloseButton(props, {SessionUser}) {
   return (
     <Container {...props}>
       <MaterialButtonShare4
@@ -18,6 +18,7 @@ function MaterialChipWithCloseButton(props) {
           height: 36,
           width: 36
         }}
+        user = {SessionUser}
       />
     </Container>
   );

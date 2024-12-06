@@ -6,10 +6,15 @@ import MaterialButtonShare1 from "../components/MaterialButtonShare1";
 import MaterialChipWithCloseButton from "../components/MaterialChipWithCloseButton";
 import Carousel from "./Carousel/Carousel";
 import uuidv4 from "uuid";
+import ProfileButton from '../components/profileButton'
+import { useSelector } from 'react-redux';
 import "./styles.css";
 
 
-function Untitled(props) {
+function Untitled({ isLoaded }) {
+  const sessionUser = useSelector(state => state.session.user);
+
+
   const cardData = [
     { title: "Tools", image: require("../assets/images/card1.png") },
     { title: "Sporting", image: require("../assets/images/card2.png") },
@@ -28,7 +33,7 @@ function Untitled(props) {
         <div
           className="slide"
           style={{ backgroundImage: `url(${require("../assets/images/cara1.png")})` }}
-          >
+        >
           Why would you buy, when you can rent!
         </div>
       )
@@ -39,7 +44,7 @@ function Untitled(props) {
         <div
           className="slide"
           style={{ backgroundImage: `url(${require("../assets/images/cara2.png")})` }}
-          >
+        >
         </div>
       )
     },
@@ -49,7 +54,7 @@ function Untitled(props) {
         <div
           className="slide"
           style={{ backgroundImage: `url(${require("../assets/images/cara3.png")})` }}
-          >
+        >
         </div>
       )
     },
@@ -59,7 +64,7 @@ function Untitled(props) {
         <div
           className="slide"
           style={{ backgroundImage: `url(${require("../assets/images/cara4.png")})` }}
-          >
+        >
         </div>
       )
     },
@@ -69,17 +74,17 @@ function Untitled(props) {
         <div
           className="slide"
           style={{ backgroundImage: `url(${require("../assets/images/cara5.png")})` }}
-          >
+        >
         </div>
       )
     }
 
   ];
-  
 
-  
-  
-  
+
+
+
+
   return (
     <Container>
       <BackgroundImage
@@ -88,56 +93,10 @@ function Untitled(props) {
       />
       <Content>
         <Image2Row>
-          <Image2
-            src={require("../assets/images/NewLenditLogo_1.png")}
-            alt="Logo"
-          />
-          <MaterialButtonShare
-            style={{
-              height: 30,
-              width: 48,
-              backgroundColor: "#fff",
-              borderWidth: 1,
-              borderColor: "rgba(232,232,232,1)",
-              marginLeft: 542,
-              marginTop: 41,
-              borderStyle: "solid"
-            }}
-          />
-          <MaterialButtonViolet
-            style={{
-              height: 44,
-              width: 130,
-              borderRadius: 50,
-              marginLeft: 30,
-              marginTop: 41
-            }}
-          />
-          <MaterialButtonShare1
-            style={{
-              height: 30,
-              width: 48,
-              borderWidth: 1,
-              borderColor: "rgba(232,232,232,1)",
-              marginLeft: 29,
-              marginTop: 39,
-              borderStyle: "solid"
-            }}
-          />
-          <MaterialChipWithCloseButton
-            style={{
-              height: 41,
-              width: 110,
-              borderWidth: 1,
-              borderColor: "rgba(232,232,232,1)",
-              marginLeft: 60,
-              marginTop: 36,
-              borderStyle: "solid"
-            }}
-          />
+          
         </Image2Row>
         <LoremIpsum>RENT WHAT YOU NEED. <br />LEND WHAT YOU HAVE.</LoremIpsum>
-        
+
         {/* Original Image3Row, unchanged */}
         <Image3Row>
           <Image3
@@ -164,175 +123,175 @@ function Untitled(props) {
 
         {/* Scrollable Cards Section, placed below the entire background section */}
         <CardContainer>
-  {cardData.map((item, index) => (
-    <Card key={index}>
-      <CardImage src={item.image} alt={item.title} />
-      <CardText>{item.title}</CardText>
-    </Card>
-  ))}
-</CardContainer>
+          {cardData.map((item, index) => (
+            <Card key={index}>
+              <CardImage src={item.image} alt={item.title} />
+              <CardText>{item.title}</CardText>
+            </Card>
+          ))}
+        </CardContainer>
 
       </NewSection>
 
       <InspirationSection>
-  <InspirationTitle>Some Inspiration</InspirationTitle>
-  <InspirationContainer>
-    <InspirationItem>
-      <InspirationImage src={require("../assets/images/inspiration1.png")} alt="Inspiration 1" />
-      <InspirationText>Discover skills</InspirationText>
-    </InspirationItem>
-    <InspirationItem>
-      <InspirationImage src={require("../assets/images/inspiration2.png")} alt="Inspiration 2" />
-      <InspirationText>New adventures</InspirationText>
-    </InspirationItem>
-  </InspirationContainer>
-  <InspirationContainer>
-    <InspirationItem>
-      <InspirationImage src={require("../assets/images/inspiration3.png")} alt="Inspiration 3" />
-      <InspirationText>Bring some joy</InspirationText>
-    </InspirationItem>
-    <InspirationItem>
-      <InspirationImage src={require("../assets/images/inspiration4.png")} alt="Inspiration 4" />
-      <InspirationText>DIY</InspirationText>
-    </InspirationItem>
-  </InspirationContainer>
-</InspirationSection>
+        <InspirationTitle>Some Inspiration</InspirationTitle>
+        <InspirationContainer>
+          <InspirationItem>
+            <InspirationImage src={require("../assets/images/inspiration1.png")} alt="Inspiration 1" />
+            <InspirationText>Discover skills</InspirationText>
+          </InspirationItem>
+          <InspirationItem>
+            <InspirationImage src={require("../assets/images/inspiration2.png")} alt="Inspiration 2" />
+            <InspirationText>New adventures</InspirationText>
+          </InspirationItem>
+        </InspirationContainer>
+        <InspirationContainer>
+          <InspirationItem>
+            <InspirationImage src={require("../assets/images/inspiration3.png")} alt="Inspiration 3" />
+            <InspirationText>Bring some joy</InspirationText>
+          </InspirationItem>
+          <InspirationItem>
+            <InspirationImage src={require("../assets/images/inspiration4.png")} alt="Inspiration 4" />
+            <InspirationText>DIY</InspirationText>
+          </InspirationItem>
+        </InspirationContainer>
+      </InspirationSection>
 
-<InviteSection>
-  <InviteBackgroundImage
-    src={require("../assets/images/invite.png")}
-    alt="Invite Background"
-  />
-  <InviteContent>
-    <InviteTitle>Get 10% off</InviteTitle>
-    <InviteSubtitle>Invite your friends and save money on your next rental.</InviteSubtitle>
-    <InviteButton>Invite Friends</InviteButton>
-  </InviteContent>
-</InviteSection>
+      <InviteSection>
+        <InviteBackgroundImage
+          src={require("../assets/images/invite.png")}
+          alt="Invite Background"
+        />
+        <InviteContent>
+          <InviteTitle>Get 10% off</InviteTitle>
+          <InviteSubtitle>Invite your friends and save money on your next rental.</InviteSubtitle>
+          <InviteButton>Invite Friends</InviteButton>
+        </InviteContent>
+      </InviteSection>
 
-<Carousel slides={slides} />
+      <Carousel slides={slides} />
 
 
-<InviteSection2>
-  <InviteBackgroundImage2
-    src={require("../assets/images/invite2.png")}
-    alt="Invite2 Background"
-  />
-  <InviteContent2>
-    <InviteTitle2>You and your friends can earn today!</InviteTitle2>
-    <InviteButton2>Learn More</InviteButton2>
-  </InviteContent2>
-</InviteSection2>
+      <InviteSection2>
+        <InviteBackgroundImage2
+          src={require("../assets/images/invite2.png")}
+          alt="Invite2 Background"
+        />
+        <InviteContent2>
+          <InviteTitle2>You and your friends can earn today!</InviteTitle2>
+          <InviteButton2>Learn More</InviteButton2>
+        </InviteContent2>
+      </InviteSection2>
 
-<InviteSection3>
-  <InviteBackgroundImage3
-    src={require("../assets/images/banner1.png")}
-    alt="Invite3 Background"
-  />
-</InviteSection3>
+      <InviteSection3>
+        <InviteBackgroundImage3
+          src={require("../assets/images/banner1.png")}
+          alt="Invite3 Background"
+        />
+      </InviteSection3>
 
-<TitleContainer>
-  <TitleRow>
-    <TitleCont1>EARN MONEY</TitleCont1>
-    <TitleCont2>SAVE MONEY</TitleCont2>
-  </TitleRow>
-  <Underlines>
-    <BlueUnderline />
-    <GreyUnderline />
-  </Underlines>
-</TitleContainer>
-<ContentContainer>
-  <LeftContent>
-    <LeftTitle>
-      Start listing and earn money with <LeftTitleBlue>Lend It!!</LeftTitleBlue>
-    </LeftTitle>
-    <LeftTitle2>Earn extra cash by sharing what you own</LeftTitle2>
-  </LeftContent>
-  <RightImage src={require('../assets/images/lawnmover.png')} alt="Description" />
-</ContentContainer>
+      <TitleContainer>
+        <TitleRow>
+          <TitleCont1>EARN MONEY</TitleCont1>
+          <TitleCont2>SAVE MONEY</TitleCont2>
+        </TitleRow>
+        <Underlines>
+          <BlueUnderline />
+          <GreyUnderline />
+        </Underlines>
+      </TitleContainer>
+      <ContentContainer>
+        <LeftContent>
+          <LeftTitle>
+            Start listing and earn money with <LeftTitleBlue>Lend It!!</LeftTitleBlue>
+          </LeftTitle>
+          <LeftTitle2>Earn extra cash by sharing what you own</LeftTitle2>
+        </LeftContent>
+        <RightImage src={require('../assets/images/lawnmover.png')} alt="Description" />
+      </ContentContainer>
 
-<MapSection>
-  <MapBackgroundImage src={require('../assets/images/map-background.png')} alt="Map Background" />
-  <MapContentWrapper>
-    <MapTitleContainer>
-      <MapTitle>Get it in the iOS
-App Store or on
-Google Play
-today!
-</MapTitle>
-    </MapTitleContainer>
-    <MapButtonContainer>
-      <MapImageButton src={require('../assets/images/app_store_button.png')} alt="App Store" />
-      <MapImageButton src={require('../assets/images/play_store_button.png')} alt="Play Store" />
-    </MapButtonContainer>
-  </MapContentWrapper>
-</MapSection>
+      <MapSection>
+        <MapBackgroundImage src={require('../assets/images/map-background.png')} alt="Map Background" />
+        <MapContentWrapper>
+          <MapTitleContainer>
+            <MapTitle>Get it in the iOS
+              App Store or on
+              Google Play
+              today!
+            </MapTitle>
+          </MapTitleContainer>
+          <MapButtonContainer>
+            <MapImageButton src={require('../assets/images/app_store_button.png')} alt="App Store" />
+            <MapImageButton src={require('../assets/images/play_store_button.png')} alt="Play Store" />
+          </MapButtonContainer>
+        </MapContentWrapper>
+      </MapSection>
 
-<FeaturesSection>
-  <FeatureTitle>WHY LENDIT?</FeatureTitle>
-  <FeatureText>Unlock the power of your community! Rent and book services effortlessly in one app. With secure payments and your transactions are 
-  safe and your items are protected!</FeatureText>
-  
-  <FeatureContainer>
-    <FeatureCard>
-      <FeatureImage src={require('../assets/images/feature1.png')} alt="Feature 1" />
-      <FeatureCardTitle>Economical</FeatureCardTitle>
-      <FeatureCardText>Monetize what you already own! Make money from unused items and save on things you rarely need.</FeatureCardText>
-    </FeatureCard>
+      <FeaturesSection>
+        <FeatureTitle>WHY LENDIT?</FeatureTitle>
+        <FeatureText>Unlock the power of your community! Rent and book services effortlessly in one app. With secure payments and your transactions are
+          safe and your items are protected!</FeatureText>
 
-    <FeatureCard>
-      <FeatureImage src={require('../assets/images/feature2.png')} alt="Feature 2" />
-      <FeatureCardTitle>Safe</FeatureCardTitle>
-      <FeatureCardText>ID verification and privacy
-safeguards help to make
-Lending and borrowing safe for
-both parties.</FeatureCardText>
-    </FeatureCard>
+        <FeatureContainer>
+          <FeatureCard>
+            <FeatureImage src={require('../assets/images/feature1.png')} alt="Feature 1" />
+            <FeatureCardTitle>Economical</FeatureCardTitle>
+            <FeatureCardText>Monetize what you already own! Make money from unused items and save on things you rarely need.</FeatureCardText>
+          </FeatureCard>
 
-    <FeatureCard>
-      <FeatureImage src={require('../assets/images/feature3.png')} alt="Feature 3" />
-      <FeatureCardTitle>Secure</FeatureCardTitle>
-      <FeatureCardText>Best in class payment
-processing by Stripe keeps your
-financial details secure.</FeatureCardText>
-    </FeatureCard>
-  </FeatureContainer>
-</FeaturesSection>
+          <FeatureCard>
+            <FeatureImage src={require('../assets/images/feature2.png')} alt="Feature 2" />
+            <FeatureCardTitle>Safe</FeatureCardTitle>
+            <FeatureCardText>ID verification and privacy
+              safeguards help to make
+              Lending and borrowing safe for
+              both parties.</FeatureCardText>
+          </FeatureCard>
 
-<NewsletterSection>
-  <NewsBackgroundImage src={require('../assets/images/newsletterbackground.png')} alt="News Background" />
-  <NewsletterContent>
-    <NewsletterHeading>Sign up for news, updates and promotions</NewsletterHeading>
-    <NewsletterInputContainer>
-      <NewsletterInputField type="text" placeholder="Your email" />
-      <NewsletterSubmitButton>Submit</NewsletterSubmitButton>
-    </NewsletterInputContainer>
-  </NewsletterContent>
-</NewsletterSection>
+          <FeatureCard>
+            <FeatureImage src={require('../assets/images/feature3.png')} alt="Feature 3" />
+            <FeatureCardTitle>Secure</FeatureCardTitle>
+            <FeatureCardText>Best in class payment
+              processing by Stripe keeps your
+              financial details secure.</FeatureCardText>
+          </FeatureCard>
+        </FeatureContainer>
+      </FeaturesSection>
 
-<FooterContainer>
-      <Column>
-        <ColumnHeading>COMPANY</ColumnHeading>
-        <Link>About</Link>
-        <Link>Jobs</Link>
-        <Link>Our Guarantee</Link>
-      </Column>
-      <Column>
-        <ColumnHeading>SUPPORT</ColumnHeading>
-        <Link>FAQ</Link>
-        <Link>Customer support</Link>
-      </Column>
-      <Column>
-        <ColumnHeading>OTHER</ColumnHeading>
-        <Link>Privacy Policy</Link>
-        <Link>Terms and Conditions</Link>
-        <Link>Cookies preferences</Link>
-      </Column>
-      <Column>
-        <ImageButton src={require('../assets/images/play_store_button.png')} alt="Play Store Button" />
-        <ImageButton src={require('../assets/images/app_store_button.png')} alt="App Store Button" />
-      </Column>
-    </FooterContainer>
+      <NewsletterSection>
+        <NewsBackgroundImage src={require('../assets/images/newsletterbackground.png')} alt="News Background" />
+        <NewsletterContent>
+          <NewsletterHeading>Sign up for news, updates and promotions</NewsletterHeading>
+          <NewsletterInputContainer>
+            <NewsletterInputField type="text" placeholder="Your email" />
+            <NewsletterSubmitButton>Submit</NewsletterSubmitButton>
+          </NewsletterInputContainer>
+        </NewsletterContent>
+      </NewsletterSection>
+
+      <FooterContainer>
+        <Column>
+          <ColumnHeading>COMPANY</ColumnHeading>
+          <Link>About</Link>
+          <Link>Jobs</Link>
+          <Link>Our Guarantee</Link>
+        </Column>
+        <Column>
+          <ColumnHeading>SUPPORT</ColumnHeading>
+          <Link>FAQ</Link>
+          <Link>Customer support</Link>
+        </Column>
+        <Column>
+          <ColumnHeading>OTHER</ColumnHeading>
+          <Link>Privacy Policy</Link>
+          <Link>Terms and Conditions</Link>
+          <Link>Cookies preferences</Link>
+        </Column>
+        <Column>
+          <ImageButton src={require('../assets/images/play_store_button.png')} alt="Play Store Button" />
+          <ImageButton src={require('../assets/images/app_store_button.png')} alt="App Store Button" />
+        </Column>
+      </FooterContainer>
 
 
     </Container>
