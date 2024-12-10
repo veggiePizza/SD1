@@ -12,8 +12,6 @@ function ToolForm({ tool }) {
     const [city, setCity] = useState(tool.city);
     const [state, setState] = useState(tool.state);
     const [country, setCountry] = useState(tool.country);
-    const [lat, setLat] = useState(tool.lat);
-    const [lng, setLng] = useState(tool.lng);
     const [name, setName] = useState(tool.name);
     const [description, setDescription] = useState(tool.description);
     const [price, setPrice] = useState(tool.price);
@@ -36,9 +34,7 @@ function ToolForm({ tool }) {
         if (!address.length) errors.address = 'Address is required';
         if (!city.length) errors.city = 'City is required';
         if (!state.length) errors.state = 'State is required';
-        if (!country.length) errors.country = 'Country is required';
-        if (!lat.length) errors.latitude = 'Latitude is required';
-        if (!lng.length) errors.longitude = 'Longitude is required';
+        if (!country.length) errors.country = 'Country is required';\
         if (!name.length) errors.name = 'Name is required';
         if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
         if (!price.length) errors.price = 'Price is required';
@@ -51,14 +47,12 @@ function ToolForm({ tool }) {
         e.preventDefault();
         setPostErrors(validationErrors)
         setSuccessfullSubmit(false)
-        tool = { ...tool, address, city, state, country, lat, lng, name, description, price };
+        tool = { ...tool, address, city, state, country, name, description, price };
         const tool2 = {
             address: "1542"
             , city: "dallas"
             , state: "tx"
             , country: "usa"
-            , lat: 76.5
-            , lng: 67.8
             , name: "alex"
             , description: "tool"
             , price: 400
