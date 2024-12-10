@@ -1,11 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+<<<<<<< HEAD
 import { useModal } from "../context/Modal"
 import SignInwithGoogle from "../components/Session/signInWithGoogle"
 
 const AuthPage = () => {
   const { closeModal } = useModal();
 
+=======
+
+const AuthPage = () => {
+>>>>>>> 4cd84d6ed50be7d3fd5a1bbcf635472744bb78a1
   return (
     <Container>
       <ImageSection   backgroundImage={require("../assets/images/left_half.png")} />
@@ -20,7 +25,11 @@ const AuthPage = () => {
         <OrDivider>- OR -</OrDivider>
         <ButtonContainer>
           <CircularButton src={require("../assets/images/fb_button.png")} alt="Facebook" />
+<<<<<<< HEAD
           <SignInwithGoogle closeModal={closeModal} />
+=======
+          <CircularButton src={require("../assets/images/google_button.png")} alt="Google" />
+>>>>>>> 4cd84d6ed50be7d3fd5a1bbcf635472744bb78a1
           <CircularButton src={require("../assets/images/apple_button.png")} alt="Apple" />
         </ButtonContainer>
         <TermsText>
